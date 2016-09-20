@@ -31,7 +31,7 @@
                 Forgot password?
             </a>
             <ul class="dropdown-menu" role="menu">
-                @include('auth.passwords.email')
+                @include('auth.passwords._email')
             </ul>
         </div>&ensp;
     </div>

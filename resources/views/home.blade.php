@@ -56,9 +56,9 @@
     <div class="clear"></div>
 
     <div id="container">
-        <div id="maincolumn">
-            @yield('content')
-        </div>
+
+        @yield('content')
+
     </div>
 
     <div id="footer">

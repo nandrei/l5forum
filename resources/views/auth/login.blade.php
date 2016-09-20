@@ -3,7 +3,6 @@
     <div class="heading">Login</div>
     <form id="userlogin {{ $errors->has('email', 'password') ? ' has-error' : '' }}" method="post"
           action="{{ url('/login') }}">
-        {{ csrf_field() }}
 
         <input id="email" type="email" name="email" placeholder="Email" value="{{ old('email') }}" required autofocus>
         @if ($errors->has('email'))
@@ -23,5 +22,6 @@
         <span style="padding: 5px"> Remember Me </span><br><br>
 
         <input class="submit" type="submit" value="Login" style="width: 100px">
+        {{ csrf_field() }}
     </form>
 </div>

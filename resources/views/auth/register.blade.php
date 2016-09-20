@@ -3,7 +3,6 @@
     <div class="heading">Register</div>
 
     <form id="user-reg" method="post" action="{{ url('/register') }}">
-        {{ csrf_field() }}
         <div class="inlined {{ $errors->has('name') ? ' has-error' : '' }}">
             <label for="name"> Name: </label>
             <input id="name" type="text" name="name" value="{{ old('name') }}" required autofocus>
@@ -44,6 +43,7 @@
             @endif
         </div>
         <input class="submit" type="submit" value="Register" style="width: 100px">
+        {{ csrf_field() }}
     </form>
 </div>
 

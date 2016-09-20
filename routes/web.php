@@ -16,9 +16,9 @@ Route::get('/', array(
     'uses' => 'HomeController@index'
 ));
 
-Route::get('/reg', array(
-    'as' => 'homepagea',
-    'uses' => 'HomeController@index1'
+Route::get('/categ', array(
+    'as' => 'categories',
+    'uses' => 'CategoriesController@showCategories'
 ));
 
 Auth::routes();

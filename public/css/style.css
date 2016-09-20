@@ -237,12 +237,10 @@ label {
 
 #container {
     width: 1080px;
-    min-width: 580px;
-    min-height: 580px;
+    min-height: 480px;
     margin: 0 auto;
     margin-bottom: 10px;
     padding-top: 32px;
-    padding-left: 15px;
     border: 1px solid #2e465d;
     border-radius: 8px;
     box-shadow: 0 0 5px 1px #111;
@@ -643,31 +641,36 @@ fieldset {
     border-radius: 1px;
 }
 
-#sectionmain {
-    width: 95%;
-    margin: 15px auto 0 auto;
+.forum-innercontent {
+    width: 1020px;
+    margin: 0 auto;
 }
 
-#sectionmain .sectiontitle {
+.forum-header {
     background: #2c3e50;
     color: #E0E0E0;
     font-weight: bold;
+    border-radius: 5px;
     border: 1px solid #2e465d;
     padding: 5px 8px;
+    margin: auto;
 }
 
 #forummain {
-    width: 95%;
     margin: 0 auto;
+    border-radius: 5px;
+    background-color: lightgray;
+    line-height: normal;
+    margin-bottom: 15px;
 }
 
 #forummain .forumrow {
     border: 1px solid #2e465d;
+    border-radius: 5px;
     margin: -1px 0;
     padding: 4px;
 }
 
-/* -1px top and bottom to make borders collapse */
 #forummain .forumcell {
     float: left;
 }
@@ -706,7 +709,6 @@ fieldset {
     padding: 4px;
 }
 
-/* -1px top and bottom to make borders collapse */
 #viewforum .viewforumcell {
     float: left;
 }

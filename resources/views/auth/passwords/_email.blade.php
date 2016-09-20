@@ -9,7 +9,6 @@
     @endif
 
     <form id="userlogin" method="post" action="{{ url('/password/email') }}">
-        {{ csrf_field() }}
 
         <div class="inlined {{ $errors->has('email') ? ' has-error' : '' }}">
             <label for="name"> E-Mail Address: </label>
@@ -22,5 +21,6 @@
         </div>
 
         <input class="submit" type="submit" value="Send Password Reset Link" style="margin-left: 66px">
+        {{ csrf_field() }}
     </form>
 </div>

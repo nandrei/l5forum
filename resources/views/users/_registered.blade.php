@@ -5,7 +5,7 @@
 </div>
 
 <div class="user_info">
-    <div style="padding-top: 12px">Welcome, <a href="#"><span> {{ Auth::user() }} </span></a>
+    <div style="padding-top: 12px">Welcome, <a href="#"><span> {{ Auth::user()->name }} </span></a>
         <span>[New/Power user]</span>
     </div>
     <div style="padding-top: 8px">
@@ -14,7 +14,7 @@
                 <img src="img/icons/messages.png" alt title="View your messages">
             </span>
         </a>
-        &ensp;;
+        &ensp;
         <a href="#friends">
             <span>
                 <img src="img/icons/friends.png" alt title="Open friends list">
