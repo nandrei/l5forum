@@ -1,4 +1,4 @@
-@extends('home')
+@extends('default')
 
 @section('content')
 
@@ -13,12 +13,12 @@
                     @foreach($category['subcateg'] as $subcategory)
                         <div class="forumrow">
                             <div class="forumcell" align="left" style="width: 50%">
-                        <span class="forumcellinside" style="padding: 10px">
-                            {{--<img src="{{ URL::asset('img/newposts.png') }}">--}}
+                        <span class="forumcellinside" style="padding: 5px">
+                            <img src="{{ URL::asset('img/forum-newposts.png') }}">
                         </span>
                                 <span class="forumcellinside">
                             <div>
-                                <a href="{{ $subcategory['id'] }}">{{ $subcategory['name'] }}</a>
+                                <a href="subcat/{{ $subcategory['name'] }}?subcat_id={{ $subcategory['id'] }} ">{{ $subcategory['name'] }}</a>
                             </div>
 
                             <div>Description</div>

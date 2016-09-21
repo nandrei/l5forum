@@ -11,14 +11,19 @@
 |
 */
 
+Auth::routes();
+
 Route::get('/', array(
     'as' => 'homepage',
-    'uses' => 'HomeController@index'
+    'uses' => 'HomeController@showCategories'
 ));
 
-Route::get('/categ', array(
-    'as' => 'categories',
-    'uses' => 'CategoriesController@showCategories'
+Route::get('subcat/{subcategory}', array(
+    'as' => 'topics',
+    'uses' => 'HomeController@showTopics'
 ));
 
-Auth::routes();
+Route::get('members', array(
+    'as' => 'members',
+    'uses' => 'HomeController@showMembers'
+));

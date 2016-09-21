@@ -220,7 +220,7 @@ label {
 
 #nav ul li a {
     display: block;
-    padding: 8px 15px 12px 18px; /*background: url('img/nav-bar.png') left bottom no-repeat;*/
+    padding: 8px 15px 12px 18px;
 }
 
 #nav ul li,
@@ -659,14 +659,14 @@ fieldset {
 #forummain {
     margin: 0 auto;
     border-radius: 5px;
-    background-color: lightgray;
     line-height: normal;
     margin-bottom: 15px;
 }
 
 #forummain .forumrow {
+    background-color: lightgray;
     border: 1px solid #2e465d;
-    border-radius: 5px;
+    border-radius: inherit;
     margin: -1px 0;
     padding: 4px;
 }
@@ -691,20 +691,24 @@ fieldset {
 }
 
 #viewforum {
-    width: 95%;
+    border-radius: 5px;
     margin: 0 auto;
+    margin-bottom: 25px;
 }
 
-#viewforum .viewforumtitle {
+#viewforum .viewforumheader {
     background: #2c3e50;
     color: #E0E0E0;
     font-weight: bold;
     border: 1px solid #2e465d;
+    border-radius: inherit;
     padding: 5px 8px;
 }
 
 #viewforum .viewforumrow {
+    background-color: lightgray;
     border: 1px solid #2e465d;
+    border-radius: inherit;
     margin: -1px 0;
     padding: 4px;
 }
