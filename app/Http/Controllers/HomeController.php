@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use phpDocumentor\Reflection\Types\Null_;
 
 class HomeController extends Controller
 {
@@ -22,12 +23,14 @@ class HomeController extends Controller
      * @return \Illuminate\Http\Response
      */
 
-    public function showCategories()
+    public function index()
     {
-        $categ = \DB::table('categories')->get();
+        $categ = \DB::select(\DB::raw("SELECT * FROM categories WHERE 1"));
         $categ = json_decode(json_encode($categ), true);
-        $subcateg = \DB::table('subcategories')->get();
+        $subcateg = \DB::select(\DB::raw("SELECT * FROM subcategories WHERE 1"));
         $subcateg = json_decode(json_encode($subcateg), true);
+        $topics = \DB::select(\DB::raw("SELECT * FROM topics WHERE 1"));
+        $topics = json_decode(json_encode($topics), true);
 
         foreach ($categ as $k0 => $category) {
             foreach ($subcateg as $k1 => $subcategory) {
@@ -36,29 +39,52 @@ class HomeController extends Controller
                 }
             }
         }
-        //dd(compact('categ'));
+//        foreach ($subcateg as $k0 => $subcategory) {
+//            foreach ($topics as $x1 => $topic) {
+//                if ($subcategory['id'] === $topic['parent_category_id']) {
+//                        $subcateg[$k0]['topics'][] = $topic;
+//                }
+//            }
+//        }
+
+        //dd(compact('categ', 'subcateg'));
         return view('forum.main', compact('categ'));
+    }
+
+    public function showSubcategories(Request $request)
+    {
+        $categ_id = $request->input('cat_id');
+
+        $subcateg = \DB::select(\DB::raw("SELECT * FROM subcategories WHERE parent_category_id = $categ_id"));
+        $subcateg = json_decode(json_encode($subcateg), true);
+
+        return view('forum.subcategories', compact('subcateg'));
+
     }
 
     public function showTopics(Request $request)
     {
-        $parent_category_id = $request->input('subcat_id');
-        $subcateg = \DB::select(\DB::raw("SELECT * FROM subcategories WHERE 1"));
-        $subcateg = json_decode(json_encode($subcateg), true);
-        $topics = \DB::select(\DB::raw("SELECT * FROM topics WHERE parent_category_id = $parent_category_id"));
+        $subcateg_id = $request->input('subcat_id');
+
+        $topics = \DB::select(\DB::raw("SELECT * FROM topics WHERE parent_category_id = $subcateg_id"));
         $topics = json_decode(json_encode($topics), true);
 
-
-        //dd($parent_category_id, $topics);
-
         return view('forum.topics', compact('topics'));
+    }
+
+    public function showPosts(Request $request)
+    {
+        $topic_id = $request->input('topic_id');
+
+        $posts = \DB::select(\DB::raw("SELECT * FROM posts WHERE topic_id = $topic_id"));
+        $posts = json_decode(json_encode($posts), true);
+
+        return view('forum.posts', compact('posts'));
     }
 
     public function showMembers()
     {
         $users = \DB::select(\DB::raw("SELECT * FROM users WHERE 1"));
-
-        //dd($users);
 
         return view('users.users', compact('users'));
     }

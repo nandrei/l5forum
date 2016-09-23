@@ -15,12 +15,22 @@ Auth::routes();
 
 Route::get('/', array(
     'as' => 'homepage',
-    'uses' => 'HomeController@showCategories'
+    'uses' => 'HomeController@index'
 ));
 
-Route::get('subcat/{subcategory}', array(
+Route::get('category', array(
+    'as' => 'subcategories',
+    'uses' => 'HomeController@showSubcategories'
+));
+
+Route::get('subcategory', array(
     'as' => 'topics',
     'uses' => 'HomeController@showTopics'
+));
+
+Route::get('topic', array(
+    'as' => 'posts',
+    'uses' => 'HomeController@showPosts'
 ));
 
 Route::get('members', array(
