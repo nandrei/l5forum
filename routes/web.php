@@ -33,6 +33,11 @@ Route::get('topic', array(
     'uses' => 'HomeController@showPosts'
 ));
 
+Route::any('subcategory/newtopic', array(
+    'as' => 'newtopic',
+    'uses' => 'HomeController@createTopic'
+));
+
 Route::get('members', array(
     'as' => 'members',
     'uses' => 'HomeController@showMembers'

@@ -5,7 +5,9 @@
     <div class="forum-innercontent">
         @foreach($categ as $category)
             <div class="forum-header">
-                <span>{{ $category['name'] }}</span>
+                <a href="category?cat_id={{ $category['id'] }}">
+                    <span>{{ $category['name'] }}</span>
+                </a>
             </div>
 
             <div id="forummain" align="center">
@@ -18,7 +20,7 @@
                         </span>
                                 <span class="forumcellinside">
                             <div>
-                                <a href="subcat/{{ $subcategory['name'] }}?subcat_id={{ $subcategory['id'] }} ">{{ $subcategory['name'] }}</a>
+                                <a href="subcategory?subcat_id={{ $subcategory['id'] }}">{{ $subcategory['name'] }}</a>
                             </div>
 
                             <div>Description</div>
@@ -60,13 +62,5 @@
             </div>
         @endforeach
     </div>
-
-    {{--@foreach($posts as $post)--}}
-    {{--<div class="posts">--}}
-    {{--<a href="{{ $topic['id'] }}/{{ $post['id'] }}">--}}
-    {{--<span>{{ $post['content'] }}</span>--}}
-    {{--</a>--}}
-    {{--</div>--}}
-    {{--@endforeach--}}
 
 @endsection

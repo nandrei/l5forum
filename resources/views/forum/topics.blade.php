@@ -3,24 +3,30 @@
 @section('content')
 
     <div class="forum-innercontent">
-        <div class="forum-header">
-            <span> $category['name'] -> $subcategory['name'] </span>
+        <div class="forum-nav">
+            <span>
+                <a href="{{ url('/') }}"> lforum </a> >
+                <a href="#"> Category </a> >
+                <a href="#"> Subcategory </a>
+            </span>
         </div>
         <div align="left" style="float:left;margin:10px 0 5px 25px;">
-            <p align="center">
             <div class="forumpager">
                 <span><a>&laquo;</a></span>&nbsp;
                 <span class="current">1</span>&nbsp;
                 <span><a>&raquo;</a></span>
             </div>
-            </p>
         </div>
-        <div style="float:right;margin:17px 25px 0 0;">
-            <form method="get" action="?">
+        <div style="float:right;margin:14px 25px 0 0;">
+            @if(Auth::guest())
+                <input type=submit value="Log in to create new topic" class="btn"/>
+            @elseif(Auth::user())
+                <form method="get" action="{{ url('subcategory/newtopic') }}">
                 <input type="hidden" name="action" value="newtopic">
-                <input type="hidden" name="forumid" value="1">
+                    <input type="hidden" name="subcat_id" value="{{ $subcat_id }}">
                 <input type=submit value="New topic" class="btn"/>
             </form>
+            @endif
         </div>
         <div class="clearfix"></div>
 
@@ -41,7 +47,9 @@
                         </span>
                             <span class="viewforumcellinside">
 					        <div>
-                                <a href="#topic"><b>{{ $topic['name'] }}</b></a>
+                                <a href="topic?topic_id={{ $topic['id'] }}">
+                                    <b>{{ $topic['name'] }}</b>
+                                </a>
                             </div>
                         <div style="margin-top:2px" class="startedby">
                             <span>Started by <a href=""><b>username</b></a></span>
