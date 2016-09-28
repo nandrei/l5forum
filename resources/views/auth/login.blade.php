@@ -1,9 +1,10 @@
 <div class='dropdown-box'>
     <div class='dropdown-arrow arrowtop'></div>
     <div class="heading">Login</div>
-    <form id="userlogin {{ $errors->has('email', 'password') ? ' has-error' : '' }}" method="post"
-          action="{{ url('/login') }}">
-
+    <form id="userlogin " method="post" action="{{ url('/login') }}">
+        <p>
+            {{ $errors->has('email', 'password') ? ' has-error' : '' }}
+        </p>
         <input id="email" type="email" name="email" placeholder="Email" value="{{ old('email') }}" required autofocus>
         @if ($errors->has('email'))
             <span class="help-block">

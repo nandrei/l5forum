@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use phpDocumentor\Reflection\Types\Null_;
 
 class HomeController extends Controller
 {
@@ -77,7 +76,7 @@ class HomeController extends Controller
         if ($request->input('action') === 'newtopic') {
 
             $subcat_id = $request->input('subcat_id');
-            //$session = session()->all();
+            $session = session()->all();
             //dd($session);
             return view('forum.newtopic', compact('subcat_id'));
         } elseif ($request->input('action') === 'savetopic') {
