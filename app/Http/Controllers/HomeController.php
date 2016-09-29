@@ -99,11 +99,4 @@ class HomeController extends Controller
         }
         return redirect('subcategory?subcat_id=' . $subcat_id);
     }
-
-    public function showMembers()
-    {
-        $users = \DB::select(\DB::raw("SELECT * FROM users WHERE 1"));
-
-        return view('users.users', compact('users'));
-    }
 }

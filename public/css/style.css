@@ -767,13 +767,41 @@ fieldset {
     text-decoration: none;
 }
 
+.border {
+    /*width: 1020px;*/
+    /*margin: 0 auto;*/
+}
+
+.blue_bg {
+    height: 410px;
+    padding: 5px 5px 5px 5px;
+    color: #E0E0E0;
+    background: #22313F;
+    border: 1px solid #2e465d;
+    border-radius: 5px;
+}
+
+.profile_main {
+    margin-bottom: 30px;
+}
+
+.profile_stats {
+    float: left;
+}
+
 .myprofile {
     float: left;
-    margin: 25px 15px 0 60px;
+    margin: 25px 15px 20px 60px;
     background: #2C3E50;
     height: 350px;
     width: 200px;
     border: 1px solid #2e465d;
+    box-shadow: 0 0 5px 1px #111
+}
+
+.user_photo {
+    width: 120px;
+    max-height: 180px;
 }
 
 .quote {
