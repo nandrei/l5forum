@@ -643,7 +643,7 @@ fieldset {
     border-radius: 1px;
 }
 
-.forum-nav {
+.forum-quicknav {
     background: #2c3e50;
     color: #E0E0E0;
     width: auto;
@@ -674,7 +674,7 @@ fieldset {
 }
 
 #forummain .forumrow {
-    background-color: lightgray;
+    background-color: #22313f;
     border: 1px solid #2e465d;
     border-radius: inherit;
     margin: -1px 0;
@@ -716,7 +716,7 @@ fieldset {
 }
 
 #viewforum .viewforumrow {
-    background-color: lightgray;
+    background-color: #22313f;
     border: 1px solid #2e465d;
     border-radius: inherit;
     margin: -1px 0;
@@ -781,12 +781,23 @@ fieldset {
     border-radius: 5px;
 }
 
+.profile_content {
+    min-width: 400px;
+    margin-top: 25px;
+    margin-left: 20px;
+    color: #E0E0E0;
+    float: left;
+    background: #2c3e50;
+    border: 1px solid #2e465d;
+    box-shadow: 0 0 5px 1px #111;
+}
+
 .profile_main {
-    margin-bottom: 30px;
+    margin: 22px 0 30px 22px;
 }
 
 .profile_stats {
-    float: left;
+    margin-left: 22px;
 }
 
 .myprofile {
@@ -800,8 +811,14 @@ fieldset {
 }
 
 .user_photo {
-    width: 120px;
-    max-height: 180px;
+    width: 150px;
+    margin: 12px;
+}
+
+.tab-pane {
+    width: 150px;
+    list-style: none;
+    margin: 0 auto;
 }
 
 .quote {

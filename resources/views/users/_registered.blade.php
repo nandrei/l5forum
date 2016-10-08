@@ -1,15 +1,23 @@
 <div class="user_avatar">
-    <a href="#">
+    <a href="userdetails?id={{ Auth::user()->id }}">
         <img src="{{ URL::asset('img/guest.png') }}" title="View user status">
     </a>
 </div>
 
 <div class="user_info">
-    <div style="padding-top: 12px">Welcome, <a href="#"><span> {{ Auth::user()->name }} </span></a>
-        <span></span>
+    <div style="padding-top: 12px">
+        Welcome, <a href="userdetails?id={{ Auth::user()->id }}">
+            <span> {{ Auth::user()->name }} </span>
+        </a>
+        <span>
+            [ ]
+        </span>
     </div>
     <div style="padding-top: 8px">
-        <a href="#messages"><span>0</span>
+        <a href="#messages">
+            <span>
+                0
+            </span>
             <span>
                 <img src="{{ URL::asset('img/icons/messages.png') }}" alt title="View your messages">
             </span>

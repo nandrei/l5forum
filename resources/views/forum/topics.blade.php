@@ -3,11 +3,11 @@
 @section('content')
 
     <div class="forum-innercontent">
-        <div class="forum-nav">
+        <div class="forum-quicknav">
             <span>
                 <a href="{{ url('/') }}"> lforum </a> >
-                <a href="#"> Category </a> >
-                <a href="#"> Subcategory </a>
+                {{--<a href="{{ $navlinks['catlink'] }}">{{ $navlinks['catname'] }}</a> >--}}
+                {{--<a href="{{ $navlinks['subcatlink'] }}">{{ $navlinks['subcatname'] }}</a>--}}
             </span>
         </div>
         <div align="left" style="float:left;margin:10px 0 5px 25px;">
@@ -19,10 +19,10 @@
         </div>
         <div style="float:right;margin:14px 25px 0 0;">
             @if(Auth::user())
-                <form method="get" action="{{ url('subcategory/newtopic') }}">
+                <form method="get" action="{{ route('newtopic') }}">
                     <input type="hidden" name="action" value="newtopic">
                     <input type="hidden" name="subcat_id" value="{{ $subcat_id }}">
-                    <input type=submit value="New topic" class="btn"/>
+                    <input type=submit value="New topic" alt="Create new topic" class="btn"/>
                 </form>
             @else
                 <input id="login-toogle" type=button value="Log in to create new topic" class="btn"/>
@@ -47,12 +47,12 @@
                             </div>
                             <div class="viewforumcellinside">
 					        <div>
-                                <a href="topic?topic_id={{ $topic['id'] }}">
+                                <a href="../topic/{{ $topic['name'] }}?topic_id={{ $topic['id'] }}">
                                     <b>{{ $topic['name'] }}</b>
                                 </a>
                             </div>
                                 <div style="margin-top:2px" class="startedby">
-                                    <span>Started by <a href=""><b>username</b></a></span>
+                                    <span>Started by <a href=""><b>{{ $topic['author'] }}</b></a></span>
                                     <span style="margin-left:15px">
                                         <span class="minipager">
                                             <span><a href=&page=1>1</a></span>
@@ -67,18 +67,18 @@
                         </div>
                         <div class="viewforumcell" align="center" style="width:15%; font-size:10px">
                             <div class="viewforumcellinside">
-                                <div>$replies</div>
+                                <div>{{ $topic['replies'] }}</div>
                             </div>
                         </div>
                         <div class="viewforumcell" align="center" style="width:15%; font-size:10px">
                             <div class="viewforumcellinside">
-                                <div>$views</div>
+                                <div>{{ $topic['replies'] }}</div>
                             </div>
                         </div>
                         <div class="viewforumcell" align="center" style="width:20%">
                             <div class="viewforumcellinside">
-                                <div><a href=""><b>username</b></a></div>
-                                <div class="lastpostdate">date - time</div>
+                                <div><a href=""><b>{{ $topic['lastpostauthor'] }}</b></a></div>
+                                <div class="lastpostdate">{{ $topic['lastpostdate'] }}</div>
                             </div>
                         </div>
                         <div class="clearfix"></div>

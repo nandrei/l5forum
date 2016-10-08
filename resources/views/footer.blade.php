@@ -1,7 +1,7 @@
 <table class="foruminfo" width="100%" cellpadding="3" cellspacing="1" border="0">
     <tr>
         <td colspan="4" height="28" align="center">
-                    <span class="bold">Forum info (refreshes every 5 minutes)
+                    <span class="bold">Forum info
                     </span>
         </td>
     </tr>
