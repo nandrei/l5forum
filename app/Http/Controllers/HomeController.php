@@ -43,45 +43,78 @@ class HomeController extends Controller
 
     public function showSubcategories(Request $request)
     {
-        $categ_id = $request->input('cat_id');
+        $cat_id = $request->input('cat_id');
 
-        $categ = DB::select(DB::raw("SELECT * FROM categories WHERE id = $categ_id"));
-        $categ = json_decode(json_encode($categ), true);
-        $subcateg = DB::select(DB::raw("SELECT * FROM subcategories WHERE parent_category_id = $categ_id"));
+        //$subcateg = DB::select(DB::raw("SELECT * FROM subcategories WHERE parent_category_id = $cat_id"));
+        $subcateg = DB::table('subcategories')->where('parent_category_id', '=', $cat_id)->get();
         $subcateg = json_decode(json_encode($subcateg), true);
 
-        return view('forum.subcategories', compact('categ', 'subcateg'));
+        foreach ($subcateg as $k0 => $subcategory) {
+            $subcat_id = $subcategory['id'];
+            $no_topics = DB::table('topics')->where('parent_category_id', '=', $subcat_id)->count();
+            $subcateg[$k0]['no_topics'] = $no_topics;
+            $topics = DB::table('topics')->where('parent_category_id', '=', $subcat_id)->get();
+            $topics = json_decode(json_encode($topics), true);
+
+            $total_no_posts = 0;
+            foreach ($topics as $k1 => $topic) {
+                $topic_id = $topic['id'];
+                $no_posts = DB::table('posts')->where('topic_id', '=', $topic_id)->count();
+                $total_no_posts += $no_posts;
+            }
+            $subcateg[$k0]['no_posts'] = $total_no_posts;
+
+            //$lasttopic[$k0] = DB::table('topics')->where('parent_category_id', '=', $subcat_id)->orderby('created_at', 'desc')->first();
+            $lasttopic = DB::select(DB::raw("SELECT * FROM topics WHERE parent_category_id = $subcat_id ORDER BY created_at DESC LIMIT 1"));
+            $lasttopic = json_decode(json_encode($lasttopic), true);
+
+            foreach ($lasttopic as $k2 => $topic) {
+                $lasttopic_id = $topic['id'];
+                $lastpost = DB::table('posts')->where('topic_id', '=', $lasttopic_id)
+                    ->join('users', 'users.id', '=', 'posts.author_id')
+                    ->select('posts.created_at', 'users.name as author')->get();
+                //dd($lastpost);
+                if ($subcat_id === $topic['parent_category_id']) {
+                    $subcateg[$k0]['lasttopic_name'] = $topic['name'];
+                    $subcateg[$k0]['lasttopic_id'] = $lasttopic_id;
+                    $subcateg[$k0]['lastpost_date'] = $lastpost[$k2]->created_at;
+                    $subcateg[$k0]['lastpost_author'] = $lastpost[$k2]->author;
+                }
+            }
+        }
+        //dd(compact('subcateg'));
+        return view('forum.subcategories', compact('cat_id', 'subcateg'));
     }
 
     public function showTopics(Request $request)
     {
         $subcat_id = $request->input('subcat_id');
 
-        $topics = DB::table('topics')->where('parent_category_id', '=', $subcat_id)->get();
-//                                     ->join('users', 'users.id', '=', 'topics.author_id')
-//                                     ->select('topics.*', 'users.name')->get();
+        $topics = DB::table('topics')->where('parent_category_id', '=', $subcat_id)
+            ->join('users', 'users.id', '=', 'topics.author_id')
+            ->select('topics.*', 'users.name as author_name')->get();
         $topics = json_decode(json_encode($topics), true);
 
-        foreach ($topics as $k0 => $topic) {
-            $topic_id = $topic['author_id'];
-            $topic_author = DB::select(DB::raw("SELECT id, name FROM users WHERE id = $topic_id"));
-            $topic_author = json_decode(json_encode($topic_author), true);
-
-            foreach ($topic_author as $k1 => $author) {
-                if ($topic_id === $author['id']) {
-                    $topics[$k0]['author'] = $author['name'];
-                }
-            }
-        }
+//        foreach ($topics as $k0 => $topic) {
+//            $topic_id = $topic['author_id'];
+//            $topic_author = DB::select(DB::raw("SELECT id, name FROM users WHERE id = $topic_id"));
+//            $topic_author = json_decode(json_encode($topic_author), true);
+//
+//            foreach ($topic_author as $k1 => $author) {
+//                if ($topic_id === $author['id']) {
+//                    $topics[$k0]['author'] = $author['name'];
+//                }
+//            }
+//        }
         foreach ($topics as $k0 => $topic) {
             $topic_id = $topic['id'];
-            //$lastpost = DB::table('posts')->where('topic_id', $topic_id)->orderby('created_at', 'desc')->first();
+            //$lastpost[$k0] = DB::table('posts')->where('topic_id', $topic_id)->orderby('created_at', 'desc')->first();
             $lastpost = DB::select(DB::raw("SELECT * FROM posts WHERE topic_id = $topic_id ORDER BY created_at DESC LIMIT 1"));
             $lastpost = json_decode(json_encode($lastpost), true);
 
             foreach ($lastpost as $k1 => $post) {
                 if ($topic_id === $post['topic_id']) {
-                    $topics[$k0]['lastpostdate'] = $post['created_at'];
+                    $topics[$k0]['lastpost_date'] = $post['created_at'];
                 }
                 $author_id = $post['author_id'];
                 $lastpost_author = DB::select(DB::raw("SELECT * FROM users WHERE id = $author_id"));
@@ -89,7 +122,8 @@ class HomeController extends Controller
 
                 foreach ($lastpost_author as $k2 => $author) {
                     if ($author_id === $author['id']) {
-                        $topics[$k0]['lastpostauthor'] = $author['name'];
+                        $topics[$k0]['lastpost_author'] = $author['name'];
+                        $topics[$k0]['lastpost_author_id'] = $author['id'];
                     }
                 }
             }

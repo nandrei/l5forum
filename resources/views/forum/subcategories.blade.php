@@ -3,14 +3,14 @@
 @section('content')
 
     <div class="forum-innercontent">
-        <div class="forum-nav" style="margin-bottom: 50px">
+        <div class="forum-quicknav" style="margin-bottom: 50px">
             <span>
                 <a href="{{ url('/') }}"> lforum </a> >
-                <a href="#"> Category </a> >
+                <a href="{{ request()->segment(2) }}?cat_id={{ $cat_id }}">{{ request()->segment(2) }}</a>
             </span>
         </div>
         <div class="forum-header">
-            <span>$category['name']</span>
+            <span> {{ request()->segment(2) }} </span>
         </div>
 
         <div id="forummain" align="center">
@@ -23,25 +23,26 @@
                             </span>
                             <div class="forumcellinside">
                                 <div>
-                                    <a href="subcategory?subcat_id={{ $subcategory['id'] }}">{{ $subcategory['name'] }}</a>
+                                    <a href="../subcategory/{{ $subcategory['name'] }}?subcat_id={{ $subcategory['id'] }}">
+                                        {{ $subcategory['name'] }}</a>
                                 </div>
 
-                                <div>Description</div>
+                                <div>{{ $subcategory['description'] }}</div>
 
-                                <div style="font-size: 10px">Moderators:</div>
+                                <div style="font-size: 10px">Moderators: {{ $subcategory['moderators'] }}</div>
                             </div>
                         </div>
 
                         <div class="forumcell" align="center" style="width: 8%; font-size: 10px">
                             <div class="forumcellinside">
-                                <div>$x</div>
+                                <div>{{ $subcategory['no_topics'] }}</div>
                                 <div>topics</div>
                             </div>
                         </div>
 
                         <div class="forumcell" align="center" style="width: 8%; font-size: 10px">
                             <div class="forumcellinside">
-                                <div>$x</div>
+                                <div>{{ $subcategory['no_posts'] }}</div>
                                 <div>posts</div>
                             </div>
                         </div>
@@ -50,11 +51,13 @@
                              style="width: 31%; padding-left: 10px; margin-left: 10px">
                             <div class="forumcellinside">
                                 <div>
-                                    <a href="#last topic"><b>Last topic</b></a>
+                                    <a href="../topic/{{ $subcategory['lasttopic_name'] }}?topic_id={{ $subcategory['lasttopic_id'] }}">
+                                        <b>{{ $subcategory['lasttopic_name'] }}</b>
+                                    </a>
                                 </div>
                                 <div>
-                                    <span class="lastpostdate">date - time</span>
-                                    <span class="lastpostername">by username</span>
+                                    <span class="lastpostdate">{{ $subcategory['lastpost_date'] }} by</span>
+                                    <span class="lastpostername">{{ $subcategory['lastpost_author'] }}</span>
                                 </div>
                             </div>
                         </div>

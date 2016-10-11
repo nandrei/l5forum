@@ -52,7 +52,10 @@
                                 </a>
                             </div>
                                 <div style="margin-top:2px" class="startedby">
-                                    <span>Started by <a href=""><b>{{ $topic['author'] }}</b></a></span>
+                                    <span>Started by
+                                        <a href="{{ route('userdetails') }}?id={{ $topic['author_id'] }}">
+                                            <b>{{ $topic['author_name'] }}</b>
+                                        </a></span>
                                     <span style="margin-left:15px">
                                         <span class="minipager">
                                             <span><a href=&page=1>1</a></span>
@@ -72,13 +75,17 @@
                         </div>
                         <div class="viewforumcell" align="center" style="width:15%; font-size:10px">
                             <div class="viewforumcellinside">
-                                <div>{{ $topic['replies'] }}</div>
+                                <div>{{ $topic['views'] }}</div>
                             </div>
                         </div>
                         <div class="viewforumcell" align="center" style="width:20%">
                             <div class="viewforumcellinside">
-                                <div><a href=""><b>{{ $topic['lastpostauthor'] }}</b></a></div>
-                                <div class="lastpostdate">{{ $topic['lastpostdate'] }}</div>
+                                <div>
+                                    <a href="{{ route('userdetails') }}?id={{ $topic['lastpost_author_id'] }}">
+                                        <b>{{ $topic['lastpost_author'] }}</b>
+                                    </a>
+                                </div>
+                                <div class="lastpost_date">{{ $topic['lastpost_date'] }}</div>
                             </div>
                         </div>
                         <div class="clearfix"></div>
