@@ -3,7 +3,7 @@
 @section('content')
 
     <div class="forum-innercontent">
-        @foreach($categ as $category)
+        @foreach($categories as $category)
             <div class="forum-header">
                 <a href="category/{{ $category['name'] }}?cat_id={{ $category['id'] }}">
                     <span>{{ $category['name'] }}</span>
@@ -11,8 +11,8 @@
             </div>
 
             <div id="forummain" align="center">
-                @if (isset($category['subcateg']))
-                    @foreach($category['subcateg'] as $subcategory)
+                @if (isset($category['subcategories']))
+                    @foreach($category['subcategories'] as $subcategory)
                         <div class="forumrow">
                             <div class="forumcell" align="left" style="width: 50%">
                                 <div class="forumcellinside" style="padding: 5px">
@@ -22,22 +22,24 @@
                                     <div>
                                         <a href="subcategory/{{ $subcategory['name'] }}?subcat_id={{ $subcategory['id'] }}">{{ $subcategory['name'] }}</a>
                                     </div>
-                                    <div>Description</div>
-                                    <div style="font-size: 10px">Moderators:</div>
+                                    <div>{{ $subcategory['description'] }}</div>
+                                    <div style="font-size: 10px">Moderators: {{ $subcategory['moderators'] }}</div>
                                 </div>
                             </div>
 
                             <div class="forumcell" align="center" style="width: 8%; font-size: 10px">
                                 <div class="forumcellinside">
-                                    <div>$x</div>
+                                    <div>{{ $subcategory['no_topics'] }}</div>
                                     <div>topics</div>
                                 </div>
                             </div>
 
                             <div class="forumcell" align="center" style="width: 8%; font-size: 10px">
                                 <div class="forumcellinside">
-                                    <div>$x</div>
-                                    <div>posts</div>
+                                    @if (isset($subcategory['no_posts']))
+                                        <div>{{ $subcategory['no_posts'] }}</div>
+                                        <div>posts</div>
+                                    @endif
                                 </div>
                             </div>
 
@@ -45,12 +47,19 @@
                                  style="width: 31%; padding-left: 10px; margin-left: 10px">
                                 <div class="forumcellinside">
                                     <div>
-                                        <a href="#last topic"><b>Last topic</b></a>
+                                        @if(isset($subcategory['lasttopic_name']))
+                                            <a href="topic/{{ $subcategory['lasttopic_name'] }}?topic_id={{ $subcategory['lasttopic_id'] }}">
+                                                <b>{{ $subcategory['lasttopic_name'] }}</b>
+                                            </a>
+                                        @endif
                                     </div>
                                     <div>
-                                        <span class="lastpostdate">date - time</span>
-                                        <span class="lastpostername">by username</span>
+                                        @if (isset($subcategory['lastpost_date']))
+                                            <span class="lastpostdate">{{ $subcategory['lastpost_date'] }} by</span>
+                                            <span class="lastpostername">{{ $subcategory['lastpost_author'] }}</span>
+                                        @endif
                                     </div>
+
                                 </div>
                             </div>
                             <div class="clearfix"></div>

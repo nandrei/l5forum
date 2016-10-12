@@ -25,20 +25,62 @@ class HomeController extends Controller
 
     public function index()
     {
-        $categ = DB::select(DB::raw("SELECT * FROM categories WHERE 1"));
-        $categ = json_decode(json_encode($categ), true);
-        $subcateg = DB::select(DB::raw("SELECT * FROM subcategories WHERE 1"));
-        $subcateg = json_decode(json_encode($subcateg), true);
+        $categories = DB::select(DB::raw("SELECT * FROM categories WHERE 1"));
+        $categories = json_decode(json_encode($categories), true);
 
-        foreach ($categ as $k0 => $category) {
-            foreach ($subcateg as $k1 => $subcategory) {
-                if ($category['id'] === $subcategory['parent_category_id']) {
-                    $categ[$k0]['subcateg'][] = $subcategory;
+        foreach ($categories as $k0 => $category) {
+            $cat_id = $category['id'];
+
+            $subcateg = DB::table('subcategories')->where('parent_category_id', '=', $cat_id)->get();
+            $subcateg = json_decode(json_encode($subcateg), true);
+            $subcategories = $this->getSubcategories($subcateg);
+            $categories[$k0]['subcategories'] = $subcategories;
+        }
+        //dd(compact('categories'));
+        return view('forum.main', compact('categories'));
+    }
+
+    protected function getSubcategories($subcateg)
+    {
+        foreach ($subcateg as $k0 => $subcategory) {
+            $subcat_id = $subcategory['id'];
+            $no_topics = DB::table('topics')->where('parent_category_id', '=', $subcat_id)->count();
+            $subcateg[$k0]['no_topics'] = $no_topics;
+            $topics = DB::table('topics')->where('parent_category_id', '=', $subcat_id)->get();
+            $topics = json_decode(json_encode($topics), true);
+
+            if (empty($topics)) {
+                $subcateg[$k0]['no_topics'] = 0;
+            } else {
+
+                $total_no_posts = 0;
+                foreach ($topics as $k1 => $topic) {
+                    $topic_id = $topic['id'];
+                    $no_posts = DB::table('posts')->where('topic_id', '=', $topic_id)->count();
+                    $total_no_posts += $no_posts;
+                }
+                $subcateg[$k0]['no_posts'] = $total_no_posts;
+                //$lasttopic[$k0] = DB::table('topics')->where('parent_category_id', '=', $subcat_id)->orderby('created_at', 'desc')->first();
+                $lasttopic = DB::select(DB::raw("SELECT * FROM topics WHERE parent_category_id = $subcat_id ORDER BY created_at DESC LIMIT 1"));
+                $lasttopic = json_decode(json_encode($lasttopic), true);
+
+                foreach ($lasttopic as $k2 => $topic) {
+                    $lasttopic_id = $topic['id'];
+                    $lastpost = DB::table('posts')->where('topic_id', '=', $lasttopic_id)
+                        ->join('users', 'users.id', '=', 'posts.author_id')
+                        ->select('posts.created_at', 'users.name as author')->get();
+                    //dd($lastpost);
+                    if ($subcat_id === $topic['parent_category_id']) {
+                        $subcateg[$k0]['lasttopic_name'] = $topic['name'];
+                        $subcateg[$k0]['lasttopic_id'] = $lasttopic_id;
+                        $subcateg[$k0]['lastpost_date'] = $lastpost[$k2]->created_at;
+                        $subcateg[$k0]['lastpost_author'] = $lastpost[$k2]->author;
+                    }
                 }
             }
         }
-        //dd(compact('categ', 'subcateg'));
-        return view('forum.main', compact('categ'));
+        //dd(compact('subcateg'));
+        return $subcateg;
     }
 
     public function showSubcategories(Request $request)
@@ -48,42 +90,9 @@ class HomeController extends Controller
         //$subcateg = DB::select(DB::raw("SELECT * FROM subcategories WHERE parent_category_id = $cat_id"));
         $subcateg = DB::table('subcategories')->where('parent_category_id', '=', $cat_id)->get();
         $subcateg = json_decode(json_encode($subcateg), true);
+        $subcategories = $this->getSubcategories($subcateg);
 
-        foreach ($subcateg as $k0 => $subcategory) {
-            $subcat_id = $subcategory['id'];
-            $no_topics = DB::table('topics')->where('parent_category_id', '=', $subcat_id)->count();
-            $subcateg[$k0]['no_topics'] = $no_topics;
-            $topics = DB::table('topics')->where('parent_category_id', '=', $subcat_id)->get();
-            $topics = json_decode(json_encode($topics), true);
-
-            $total_no_posts = 0;
-            foreach ($topics as $k1 => $topic) {
-                $topic_id = $topic['id'];
-                $no_posts = DB::table('posts')->where('topic_id', '=', $topic_id)->count();
-                $total_no_posts += $no_posts;
-            }
-            $subcateg[$k0]['no_posts'] = $total_no_posts;
-
-            //$lasttopic[$k0] = DB::table('topics')->where('parent_category_id', '=', $subcat_id)->orderby('created_at', 'desc')->first();
-            $lasttopic = DB::select(DB::raw("SELECT * FROM topics WHERE parent_category_id = $subcat_id ORDER BY created_at DESC LIMIT 1"));
-            $lasttopic = json_decode(json_encode($lasttopic), true);
-
-            foreach ($lasttopic as $k2 => $topic) {
-                $lasttopic_id = $topic['id'];
-                $lastpost = DB::table('posts')->where('topic_id', '=', $lasttopic_id)
-                    ->join('users', 'users.id', '=', 'posts.author_id')
-                    ->select('posts.created_at', 'users.name as author')->get();
-                //dd($lastpost);
-                if ($subcat_id === $topic['parent_category_id']) {
-                    $subcateg[$k0]['lasttopic_name'] = $topic['name'];
-                    $subcateg[$k0]['lasttopic_id'] = $lasttopic_id;
-                    $subcateg[$k0]['lastpost_date'] = $lastpost[$k2]->created_at;
-                    $subcateg[$k0]['lastpost_author'] = $lastpost[$k2]->author;
-                }
-            }
-        }
-        //dd(compact('subcateg'));
-        return view('forum.subcategories', compact('cat_id', 'subcateg'));
+        return view('forum.subcategories', compact('cat_id', 'subcategories'));
     }
 
     public function showTopics(Request $request)
@@ -147,8 +156,7 @@ class HomeController extends Controller
         if ($request->input('action') === 'newtopic') {
 
             $subcat_id = $request->input('subcat_id');
-            //$session = session()->all();
-            //dd($session);
+
             return view('forum.newtopic', compact('subcat_id'));
 
         } elseif ($request->input('action') === 'savetopic') {
@@ -158,12 +166,9 @@ class HomeController extends Controller
             $topic = $request->input('topic');
             $post = $request->input('post');
 
-            $last_topic_id = DB::select(DB::raw("SELECT id FROM topics ORDER BY id DESC LIMIT 1"));
-            $newtopic_id = $last_topic_id[0]->id + 1;
-            $last_post_id = DB::select(DB::raw("SELECT id FROM posts ORDER BY id DESC LIMIT 1"));
-            $newpost_id = $last_post_id[0]->id + 1;
+            $newtopic_id = DB::table('topics')->max('id') + 1;
+            $newpost_id = DB::table('posts')->max('id') + 1;
 
-            //dd($subcat_id);
             DB::insert(DB::raw("INSERT INTO topics (id, parent_category_id, name, author_id)
                                   VALUES ('$newtopic_id', '$subcat_id', '$topic', '$user_id')"));
             DB::insert(DB::raw("INSERT INTO posts (id, topic_id, author_id, content)

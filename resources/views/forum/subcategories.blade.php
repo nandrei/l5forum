@@ -14,8 +14,8 @@
         </div>
 
         <div id="forummain" align="center">
-            @if (isset($subcateg))
-                @foreach($subcateg as $subcategory)
+            @if (isset($subcategories))
+                @foreach($subcategories as $subcategory)
                     <div class="forumrow">
                         <div class="forumcell" align="left" style="width: 50%">
                             <span class="forumcellinside" style="padding: 5px">
@@ -42,8 +42,10 @@
 
                         <div class="forumcell" align="center" style="width: 8%; font-size: 10px">
                             <div class="forumcellinside">
-                                <div>{{ $subcategory['no_posts'] }}</div>
-                                <div>posts</div>
+                                @if (isset($subcategory['no_posts']))
+                                    <div>{{ $subcategory['no_posts'] }}</div>
+                                    <div>posts</div>
+                                @endif
                             </div>
                         </div>
 
@@ -51,14 +53,19 @@
                              style="width: 31%; padding-left: 10px; margin-left: 10px">
                             <div class="forumcellinside">
                                 <div>
-                                    <a href="../topic/{{ $subcategory['lasttopic_name'] }}?topic_id={{ $subcategory['lasttopic_id'] }}">
-                                        <b>{{ $subcategory['lasttopic_name'] }}</b>
-                                    </a>
+                                    @if(isset($subcategory['lasttopic_name']))
+                                        <a href="../topic/{{ $subcategory['lasttopic_name'] }}?topic_id={{ $subcategory['lasttopic_id'] }}">
+                                            <b>{{ $subcategory['lasttopic_name'] }}</b>
+                                        </a>
+                                    @endif
                                 </div>
                                 <div>
-                                    <span class="lastpostdate">{{ $subcategory['lastpost_date'] }} by</span>
-                                    <span class="lastpostername">{{ $subcategory['lastpost_author'] }}</span>
+                                    @if (isset($subcategory['lastpost_date']))
+                                        <span class="lastpostdate">{{ $subcategory['lastpost_date'] }} by</span>
+                                        <span class="lastpostername">{{ $subcategory['lastpost_author'] }}</span>
+                                    @endif
                                 </div>
+
                             </div>
                         </div>
                         <div class="clearfix"></div>

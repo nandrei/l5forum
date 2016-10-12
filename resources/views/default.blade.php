@@ -15,12 +15,6 @@
     <link rel="stylesheet" href="{{ URL::asset('css/app.css') }}">
     <link rel="stylesheet" href="{{ URL::asset('css/style.css') }}">
 
-    <!-- Scripts -->
-    <script>
-        window.Laravel = <?php echo json_encode([
-                'csrfToken' => csrf_token(),
-        ]); ?>
-    </script>
 </head>
 
 <body>
@@ -30,11 +24,11 @@
         <div class="subheader">
             <a href="{{ route('homepage') }}">
                 <div id="logo" title="L5forum.ro"></div>
-                The user_id & last_activity of last request is<br>
-                @if(Session::has('user_id', 'last_activity'))
-                    {{ Session::get('user_id') }} &
-                    {{ Session::get('last_activity') }}
-                @endif
+                {{--The user_id & last_activity of last request is<br>--}}
+                {{--@if(Session::has('user_id', 'last_activity'))--}}
+                {{--{{ Session::get('user_id') }} &--}}
+                {{--{{ Session::get('last_activity') }}--}}
+                {{--@endif--}}
             </a>
 
             <div class="userbar">
@@ -52,7 +46,7 @@
                         <li class="fleft"><a href="#">Cautare</a></li>
                         <li class="fleft"><a href="{{ url('/members') }}">Members</a></li>
                         <li class="fleft"><a href="#">Regulament</a></li>
-                        <li class="fleft"><a href="//github.com/nandrei">Contact</a></li>
+                        <li class="fleft"><a target='_blank' href="//github.com/nandrei">Contact</a></li>
                     </ul>
                 </div>
             </div>
@@ -75,7 +69,7 @@
     <div id="copyright">
         <div id="copyrightInner">
             <span class="small">
-                <b>&copy; l5forum | 2016 | <a href="//github.com/nandrei">Contact</a></b>
+                <b>&copy; l5forum | 2016 | <a target='_blank' href="//github.com/nandrei">Contact</a></b>
             </span>
             <div id="copyrightInnerRight">
                 <span class="small">
