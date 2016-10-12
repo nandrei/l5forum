@@ -18,27 +18,32 @@ Route::get('/', array(
     'uses' => 'HomeController@index'
 ));
 
-Route::get('category', array(
+Route::get('category/{category}', array(
     'as' => 'subcategories',
     'uses' => 'HomeController@showSubcategories'
 ));
 
-Route::get('subcategory', array(
+Route::get('subcategory/{subcategory}', array(
     'as' => 'topics',
     'uses' => 'HomeController@showTopics'
 ));
 
-Route::get('topic', array(
+Route::get('topic/{topic}', array(
     'as' => 'posts',
     'uses' => 'HomeController@showPosts'
 ));
 
-Route::any('subcategory/newtopic', array(
+Route::any('subcategory/newtopic/create', array(
     'as' => 'newtopic',
     'uses' => 'HomeController@createTopic'
 ));
 
+Route::get('userdetails', array(
+    'as' => 'userdetails',
+    'uses' => 'MembersController@showUserDetails'
+));
+
 Route::get('members', array(
     'as' => 'members',
-    'uses' => 'HomeController@showMembers'
+    'uses' => 'MembersController@showMembers'
 ));

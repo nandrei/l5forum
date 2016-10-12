@@ -3,14 +3,9 @@
 @section('content')
 
     <div class="forum-innercontent">
-        <div class="forum-nav">
-            <span>
-                <a href="{{ url('/') }}"> lforum </a> >
-                <a href="#"> Category </a> >
-                <a href="#"> Subcategory </a> >
-                <a href="#"> Topic </a>
-            </span>
-        </div>
+
+        @include('partials.breadcrumbs')
+
         <div align="left" style="float:left;margin:10px 0 5px 25px;">
             <div class="forumpager">
                 <span><a>&laquo;</a></span>&nbsp;
@@ -24,9 +19,9 @@
                 <tr>
                     <td class="colhead" colspan="2">
                         <span class="small">#postnumber by</span>
-                        <a href="#userdetails"><b><span class="userclasscolor">username</span></b></a>
+                        <a href="#userdetails"><b><span class="userclasscolor">{{ $post['author'] }}</span></b></a>
                         <span style="position:relative; bottom:2px"></span>
-                        <span class="small">at date - time GMT </span>
+                        <span class="small">at {{ $post['post_date'] }} - GMT</span>
                         <span style="float:right"></span>
                     </td>
                 </tr>
@@ -35,19 +30,16 @@
                         <img style="width:120px; max-height:180px" src="{{ URL::asset('img/guest.png') }}">
                         <div align="left" style="margin-bottom: 5px">
                             <div style="margin: 2px 5px">
-                            <span class="small">
-                                <b>Class: member</b>
-                            </span>
+                                <span class="small"><b>Class: member</b></span>
                             </div>
                             <div style="margin: -2px 5px">
-                            <span class="small">
-                                <b>Posts: $x</b>
-                            </span>
+                                <span class="small"><b>Posts: $x</b></span>
                             </div>
                             <div style="margin: -2px 5px">
-                            <span class="small">
-                                <b>Join date: <span class="small">date</span></b>
-                            </span>
+                                <span class="small"><b>Member since: </b></span>
+                            </div>
+                            <div style="margin: -2px 5px">
+                                <span class="small"><b>{{ $post['join_date'] }}</b></span>
                             </div>
                         </div>
                     </td>

@@ -3,14 +3,11 @@
 @section('content')
 
     <div class="forum-innercontent">
-        <div class="forum-quicknav" style="margin-bottom: 50px">
-            <span>
-                <a href="{{ url('/') }}"> lforum </a> >
-                <a href="{{ request()->segment(2) }}?cat_id={{ $cat_id }}">{{ request()->segment(2) }}</a>
-            </span>
-        </div>
-        <div class="forum-header">
-            <span> {{ request()->segment(2) }} </span>
+
+        @include('partials.breadcrumbs')
+
+        <div class="forum-header" style="margin-top: 55px">
+            <span>{{ request()->segment(2) }}</span>
         </div>
 
         <div id="forummain" align="center">

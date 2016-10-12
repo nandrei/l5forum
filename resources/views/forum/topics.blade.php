@@ -3,13 +3,9 @@
 @section('content')
 
     <div class="forum-innercontent">
-        <div class="forum-quicknav">
-            <span>
-                <a href="{{ url('/') }}"> lforum </a> >
-                {{--<a href="{{ $navlinks['catlink'] }}">{{ $navlinks['catname'] }}</a> >--}}
-                {{--<a href="{{ $navlinks['subcatlink'] }}">{{ $navlinks['subcatname'] }}</a>--}}
-            </span>
-        </div>
+
+        @include('partials.breadcrumbs')
+
         <div align="left" style="float:left;margin:10px 0 5px 25px;">
             <div class="forumpager">
                 <span><a>&laquo;</a></span>&nbsp;
