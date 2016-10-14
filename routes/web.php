@@ -15,27 +15,27 @@ Auth::routes();
 
 Route::get('/', array(
     'as' => 'homepage',
-    'uses' => 'HomeController@index'
+    'uses' => 'MainController@index'
 ));
 
 Route::get('category/{category}', array(
     'as' => 'subcategories',
-    'uses' => 'HomeController@showSubcategories'
+    'uses' => 'MainController@showSubcategories'
 ));
 
 Route::get('subcategory/{subcategory}', array(
     'as' => 'topics',
-    'uses' => 'HomeController@showTopics'
+    'uses' => 'MainController@showTopics'
 ));
 
 Route::get('topic/{topic}', array(
     'as' => 'posts',
-    'uses' => 'HomeController@showPosts'
+    'uses' => 'MainController@showPosts'
 ));
 
 Route::any('subcategory/newtopic/create', array(
     'as' => 'newtopic',
-    'uses' => 'HomeController@createTopic'
+    'uses' => 'MainController@createTopic'
 ));
 
 Route::get('userdetails', array(

@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Helpers;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 
-class HomeController extends Controller
+class MainController extends Controller
 {
     /**
      * Create a new controller instance.
@@ -145,9 +146,19 @@ class HomeController extends Controller
     {
         $topic_id = $request->input('topic_id');
 
-        $posts = DB::select(DB::raw("SELECT * FROM posts WHERE topic_id = $topic_id"));
+        //$posts = DB::select(DB::raw("SELECT * FROM posts WHERE topic_id = $topic_id"));
+        $posts = DB::table('posts')->where('topic_id', '=', $topic_id)
+            ->join('users', 'users.id', '=', 'posts.author_id')
+            ->select('posts.author_id', 'posts.content', 'posts.created_at as post_date', 'users.name as author', 'users.created_at as join_date', 'users.no_posts')
+            ->get();
         $posts = json_decode(json_encode($posts), true);
 
+        $postnumber = 0;
+        foreach ($posts as $k => $post) {
+            $posts[$k]['postnumber'] = $postnumber += 1;
+        }
+        (new Helpers)->recordPageViews($topic_id);
+        //dd($posts);
         return view('forum.posts', compact('posts'));
     }
 
@@ -169,43 +180,12 @@ class HomeController extends Controller
             $newtopic_id = DB::table('topics')->max('id') + 1;
             $newpost_id = DB::table('posts')->max('id') + 1;
 
-            DB::insert(DB::raw("INSERT INTO topics (id, parent_category_id, name, author_id)
-                                  VALUES ('$newtopic_id', '$subcat_id', '$topic', '$user_id')"));
-            DB::insert(DB::raw("INSERT INTO posts (id, topic_id, author_id, content)
-                                  VALUES ('$newpost_id', '$newtopic_id', '$user_id', '$post')"));
+            $sql = "INSERT INTO topics (id, parent_category_id, name, author_id)
+                                  VALUES ('$newtopic_id', '$subcat_id', '$topic', '$user_id')
+                    INSERT INTO posts (id, topic_id, author_id, content)
+                                  VALUES ('$newpost_id', '$newtopic_id', '$user_id', '$post')";
+            DB::insert(DB::raw($sql));
         }
         return redirect('subcategory?subcat_id=' . $subcat_id);
-    }
-
-    public function getnavlinks(Request $request)
-    {
-
-        $navlinks = array();
-
-        if ($request->input('cat_id')) {
-            if (!empty($navlinks)) {
-                $navlinks = array_slice($navlinks, 6);
-            }
-            $navlinks['catname'] = $request->segment(1);
-            $navlinks['catlink'] = 'category?cat_id=' . $request->input('cat_id');
-        } elseif ($request->input('subcat_id')) {
-            if (empty($navlinks)) {
-                $categ = DB::select(DB::raw("SELECT name FROM categories WHERE id = $request->input('subcat_id')"));
-                $navlinks['catname'] = $categ[0]->name;
-                $navlinks['catlink'] = 'category?cat_id=' . $request->input('subcat_id');
-            }
-            if (in_array('subcatname', $navlinks)) {
-                $navlinks = array_slice($navlinks, 0, 4);
-            }
-            $navlinks['subcatname'] = $request->segment(1);
-            $navlinks['subcatlink'] = 'subcategory?subcat_id=' . $request->input('subcat_id');
-        } elseif ($request->input('topic_id')) {
-            if (in_array('topicname', $navlinks)) {
-                $navlinks = array_slice($navlinks, 0, 2);
-            }
-            $navlinks['topicname'] = $request->segment(1);
-            $navlinks['topiclink'] = 'topic?topic_id=' . $request->input('topic_id');
-        }
-        return $navlinks;
     }
 }

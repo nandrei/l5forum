@@ -768,8 +768,10 @@ fieldset {
 }
 
 .border {
-    /*width: 1020px;*/
-    /*margin: 0 auto;*/
+    width: 1020px;
+    margin: 0 auto;
+    border-radius: 5px;
+    box-shadow: 0 0 5px 1px #111;
 }
 
 .blue_bg {
@@ -793,18 +795,18 @@ fieldset {
 }
 
 .profile_main {
-    margin: 22px 0 30px 22px;
+    margin: 25px 0 0 22px;
 }
 
 .profile_stats {
-    margin-left: 22px;
+    margin: 38px 0 81px 22px;
 }
 
 .myprofile {
     float: left;
-    margin: 25px 15px 20px 60px;
+    margin: 25px 20px 20px 80px;
     background: #2C3E50;
-    height: 350px;
+    height: 345px;
     width: 200px;
     border: 1px solid #2e465d;
     box-shadow: 0 0 5px 1px #111

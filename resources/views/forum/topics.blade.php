@@ -49,7 +49,7 @@
                             </div>
                                 <div style="margin-top:2px" class="startedby">
                                     <span>Started by
-                                        <a href="{{ route('userdetails') }}?id={{ $topic['author_id'] }}">
+                                        <a href="{{ url('userdetails') }}?id={{ $topic['author_id'] }}">
                                             <b>{{ $topic['author_name'] }}</b>
                                         </a></span>
                                     <span style="margin-left:15px">
@@ -77,7 +77,7 @@
                         <div class="viewforumcell" align="center" style="width:20%">
                             <div class="viewforumcellinside">
                                 <div>
-                                    <a href="{{ route('userdetails') }}?id={{ $topic['lastpost_author_id'] }}">
+                                    <a href="{{ url('userdetails') }}?id={{ $topic['lastpost_author_id'] }}">
                                         <b>{{ $topic['lastpost_author'] }}</b>
                                     </a>
                                 </div>

@@ -1,12 +1,12 @@
 <div class="user_avatar">
-    <a href="userdetails?id={{ Auth::user()->id }}">
+    <a href="{{ url('userdetails') }}?id={{ Auth::user()->id }}">
         <img src="{{ URL::asset('img/guest.png') }}" title="View user status">
     </a>
 </div>
 
 <div class="user_info">
     <div style="padding-top: 12px">
-        Welcome, <a href="userdetails?id={{ Auth::user()->id }}">
+        Welcome, <a href="{{ url('userdetails') }}?id={{ Auth::user()->id }}">
             <span> {{ Auth::user()->name }} </span>
         </a>
         <span>

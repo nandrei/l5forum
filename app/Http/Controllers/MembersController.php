@@ -10,11 +10,10 @@ class MembersController extends Controller
 {
     public function showUserDetails(Request $request)
     {
-
         $user_id = $request->input('id');
         $user = \DB::select(\DB::raw("SELECT * FROM users WHERE id = $user_id"));
         $user = json_decode(json_encode($user), true);
-
+        //dd(\Session()->all());
         return view('members.userdetails', compact('user'));
     }
 

@@ -30,13 +30,13 @@ class QuickNavLinks
             $subcat_name = $request->segment(2);
             $subcat_id = $request->input('subcat_id');
 
-            $sql = "SELECT subcateg.*,categ.id as category_id , categ.name AS category_name   FROM subcategories subcateg
+            $sql = "SELECT categ.id as cat_id, categ.name AS cat_name, subcateg.id, subcateg.name, subcateg.parent_category_id FROM subcategories subcateg
 JOIN categories categ ON subcateg.parent_category_id = categ.id
-WHERE subcateg.id={$subcat_id};";
+WHERE subcateg.id = {$subcat_id}";
             $result = \DB::select(\DB::raw($sql));
 
-            $navlink['name'] = $result[0]->category_name;
-            $navlink['url'] = 'category/' . $result[0]->category_name . '?cat_id=' . $result[0]->category_id;
+            $navlink['name'] = $result[0]->cat_name;
+            $navlink['url'] = 'category/' . $result[0]->cat_name . '?cat_id=' . $result[0]->cat_id;
             $navlinks[] = $navlink;
 
             $navlink['name'] = $result[0]->name;
@@ -50,7 +50,7 @@ WHERE subcateg.id={$subcat_id};";
 
             $sql = "SELECT subcateg.id AS subcat_id, subcateg.name AS subcat_name, categ.id as cat_id , categ.name AS cat_name FROM subcategories subcateg
 JOIN categories categ ON subcateg.parent_category_id = categ.id JOIN topics ON topics.parent_category_id = subcateg.id
-WHERE topics.id=$topic_id";
+WHERE topics.id = {$topic_id}";
             $result = \DB::select(\DB::raw($sql));
 
             $navlink['name'] = $result[0]->cat_name;

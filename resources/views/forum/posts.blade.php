@@ -18,8 +18,9 @@
             <table width="100%" cellspacing="0" cellpadding="0">
                 <tr>
                     <td class="colhead" colspan="2">
-                        <span class="small">#postnumber by</span>
-                        <a href="#userdetails"><b><span class="userclasscolor">{{ $post['author'] }}</span></b></a>
+                        <span class="small">#{{ $post['postnumber'] }} by</span>
+                        <a href="{{ url('userdetails') }}?id={{ $post['author_id'] }}">
+                            <b><span class="userclasscolor">{{ $post['author'] }}</span></b></a>
                         <span style="position:relative; bottom:2px"></span>
                         <span class="small">at {{ $post['post_date'] }} - GMT</span>
                         <span style="float:right"></span>
@@ -33,7 +34,7 @@
                                 <span class="small"><b>Class: member</b></span>
                             </div>
                             <div style="margin: -2px 5px">
-                                <span class="small"><b>Posts: $x</b></span>
+                                <span class="small"><b>Posts: {{ $post['no_posts'] }}</b></span>
                             </div>
                             <div style="margin: -2px 5px">
                                 <span class="small"><b>Member since: </b></span>

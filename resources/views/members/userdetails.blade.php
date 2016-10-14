@@ -9,7 +9,7 @@
                     <img class="user_photo" src="{{ URL::asset("img/guest.png") }}" alt="user&#39;s Photo"/>
                 </p>
 
-                <ul class="clear">
+                <ul class="tab-pane">
                     <li id="tab_info" class="tab_toggle active" data-tabid="user_info">
                         <a href="#">Info</a>
                     </li>
@@ -24,51 +24,58 @@
 
             <div class="profile_content">
                 <div class="profile_main">
-                    <div class="user_info_cell">
-                        <h1 class="username" style="font-size: large">
-                            <b><span class="username">{{ $user[0]['name'] }}</span></b>
-                        </h1>
-                        Member Since - {{ $user[0]['created_at'] }}<br/>
-                        <span data-tooltip="user status...">Online/Offline</span>
-                        <span class="activity_date">Last Active - {{ session()->get('last_activity') }}</span>
-                    </div>
+                    <h1 class="username" style="font-size: large">
+                        <b><span class="username">{{ $user[0]['name'] }}</span></b>
+                    </h1>
+                    Member Since - {{ $user[0]['created_at'] }}<br/>
+                    <span data-tooltip="user status...">Online/Offline</span>
+                    <span class="activity_date">Last Active - {{ session()->get('last_activity') }}</span>
                 </div>
 
                 <div class="profile_stats">
-                    <div class="user_info_cell">
-                        <ul class="data clearfix">
-                            <li class="clear clearfix">
+                    <ul class="data">
+                        <li>
+                            <div>
                                 <span class="row_title">Class</span>
                                 <span class="row_data">Member</span>
-                            </li>
-                            <li class="clear clearfix">
+                            </div>
+                        </li>
+                        <li>
+                            <div>
                                 <span class="row_title">Active Posts</span>
                                 <span class="row_data">0</span>
-                            </li>
-                            <li class="clear clearfix">
-                                <span class="row_title">Profile Views</span>
-                                <span class="row_data">0</span>
-                            </li>
+                            </div>
+                        </li>
+                        <li>
+                            <span class="row_title">Profile Views</span>
+                            <span class="row_data">0</span>
+                        </li>
 
-                            <li class="clear clearfix">
+                        <li>
+                            <div>
                                 <span class="row_title">Member Title</span>
                                 <span class="row_data">New member</span>
-                            </li>
+                            </div>
+                        </li>
 
-                            <li class="clear clearfix">
+                        <li>
+                            <div>
                                 <span class="row_title">Country</span>
                                 <span class="row_data">Romania</span>
+                            </div>
+                        </li>
 
-                            </li>
-
-                            <li class="clear clearfix">
+                        <li>
+                            <div>
                                 <span class="row_title">Gender</span>
-                                <span class="row_data"><img src="male.png" alt="Male"/> Male
+                                <span class="row_data"><img src="{{ URL::asset('img/icons/male-icon.png') }}"
+                                                            alt="Male"/> Male
                                 </span>
-                            </li>
-                        </ul>
-                    </div>
+                            </div>
+                        </li>
+                    </ul>
                 </div>
+                <div class="clearfix"></div>
             </div>
         </div>
     </div>
