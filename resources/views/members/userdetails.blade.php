@@ -3,22 +3,16 @@
 @section('content')
 
     <div class="border">
-        <div class="blue_bg">
+        <div class="blue_bg" style="height: 410px; background-color: #22313f;">
             <div class="myprofile">
                 <p class="user_photo">
                     <img class="user_photo" src="{{ URL::asset("img/guest.png") }}" alt="user&#39;s Photo"/>
                 </p>
 
                 <ul class="tab-pane">
-                    <li id="tab_info" class="tab_toggle active" data-tabid="user_info">
-                        <a href="#">Info</a>
-                    </li>
-                    <li id="tab_topics" class=" tab_toggle" data-tabid="topics">
-                        <a href="?tab=topics" title="View Topics">Topics</a>
-                    </li>
-                    <li id="tab_posts" class=" tab_toggle" data-tabid="posts">
-                        <a href="?tab=posts" title="View Posts">Posts</a>
-                    </li>
+                    <li id="tab_info" class="active"><a data-toggle="tab" href="#user_info">Info</a></li>
+                    <li id="tab_topics"><a data-toggle="tab" href="#topics">Topics</a></li>
+                    <li id="tab_posts"><a data-toggle="tab" href="#posts">Posts</a></li>
                 </ul>
             </div>
 
@@ -32,48 +26,59 @@
                     <span class="activity_date">Last Active - {{ session()->get('last_activity') }}</span>
                 </div>
 
-                <div class="profile_stats">
-                    <ul class="data">
-                        <li>
-                            <div>
-                                <span class="row_title">Class</span>
-                                <span class="row_data">Member</span>
-                            </div>
-                        </li>
-                        <li>
-                            <div>
-                                <span class="row_title">Active Posts</span>
-                                <span class="row_data">0</span>
-                            </div>
-                        </li>
-                        <li>
-                            <span class="row_title">Profile Views</span>
-                            <span class="row_data">0</span>
-                        </li>
+                <div class="tab-content">
+                    <div id="user_info" class="tab-pane fade in active">
+                        <ul class="data" style="margin: 0 auto">
+                            <li>
+                                <div class="inlined">
+                                    <span class="label">Class:</span>
+                                    <span class="row_data">{{ $user[0]['class'] }}</span>
+                                </div>
+                                <hr class="style1">
+                            </li>
+                            <li>
+                                <div class="inlined">
+                                    <span class="label">Active Posts:</span>
+                                    <span class="row_data">0</span>
+                                </div>
+                                <hr class="style1">
+                            </li>
+                            <li>
+                                <div class="inlined">
+                                    <span class="label">Profile Views:</span>
+                                    <span class="row_data">0</span>
+                                </div>
+                                <hr class="style1">
+                            </li>
 
-                        <li>
-                            <div>
-                                <span class="row_title">Member Title</span>
-                                <span class="row_data">New member</span>
-                            </div>
-                        </li>
+                            <li>
+                                <div class="inlined">
+                                    <span class="label">Member Title:</span>
+                                    <span class="row_data">{{ $user[0]['member_title'] }}</span>
+                                </div>
+                                <hr class="style1">
+                            </li>
 
-                        <li>
-                            <div>
-                                <span class="row_title">Country</span>
-                                <span class="row_data">Romania</span>
-                            </div>
-                        </li>
+                            <li>
+                                <div class="inlined">
+                                    <span class="label">Country:</span>
+                                    <span class="row_data">{{ $user[0]['country'] }}</span>
+                                </div>
+                                <hr class="style1">
+                            </li>
 
-                        <li>
-                            <div>
-                                <span class="row_title">Gender</span>
-                                <span class="row_data"><img src="{{ URL::asset('img/icons/male-icon.png') }}"
-                                                            alt="Male"/> Male
-                                </span>
-                            </div>
-                        </li>
-                    </ul>
+                            <li>
+                                <div class="inlined">
+                                    <span class="label">Gender:</span>
+                                    <span class="row_data">
+                                        <img style="top: 2px" src="{{ URL::asset('img/icons/male-icon.png') }}"
+                                             alt="Male"/> {{ $user[0]['gender'] }}
+                                    </span>
+                                </div>
+                                <hr class="style1">
+                            </li>
+                        </ul>
+                    </div>
                 </div>
                 <div class="clearfix"></div>
             </div>

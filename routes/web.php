@@ -40,10 +40,15 @@ Route::any('subcategory/newtopic/create', array(
 
 Route::get('userdetails', array(
     'as' => 'userdetails',
-    'uses' => 'MembersController@showUserDetails'
+    'uses' => 'MembersController@showMemberDetails'
+));
+
+Route::get('profile', array(
+    'as' => 'profile',
+    'uses' => 'MembersController@showMemberProfile'
 ));
 
 Route::get('members', array(
     'as' => 'members',
-    'uses' => 'MembersController@showMembers'
+    'uses' => 'MembersController@listAllMembers'
 ));

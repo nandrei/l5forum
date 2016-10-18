@@ -29,7 +29,7 @@
             </span>
         </a>
         &ensp;
-        <a href="#profile">
+        <a href="{{ url('profile') }}">
             <span>
                 <img src="{{ URL::asset('img/icons/profile.png') }}" alt title="Edit your profile"> Profile
             </span>

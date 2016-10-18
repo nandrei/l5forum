@@ -164,12 +164,12 @@ img {
 }
 
 label {
-    width: 64px;
+    width: 72px;
     text-align: right;
 }
 
 .inlined {
-    width: 268px;
+    width: 295px;
     font-family: "Helvetica Neue";
     opacity: 0.75;
     -webkit-transition: opacity 0.15s linear;
@@ -608,9 +608,9 @@ legend {
 }
 
 fieldset {
-    padding: 1em;
+    padding: 1.2em;
     border: 1px solid #2e465d;
-    background: #2C3E50;
+    background: #22313f;
 }
 
 .forumpager {
@@ -775,10 +775,9 @@ fieldset {
 }
 
 .blue_bg {
-    height: 410px;
     padding: 5px 5px 5px 5px;
     color: #E0E0E0;
-    background: #22313F;
+    background: #2c3e50;
     border: 1px solid #2e465d;
     border-radius: 5px;
 }
@@ -795,11 +794,38 @@ fieldset {
 }
 
 .profile_main {
-    margin: 25px 0 0 22px;
+    margin: 30px 0 0 45px;
 }
 
-.profile_stats {
-    margin: 38px 0 81px 22px;
+.tab-content {
+    margin: 38px 0 24px 22px;
+}
+
+hr.style1 {
+    height: 30px;
+    width: 220px;
+    border-style: solid;
+    border-color: transparent;
+    border-width: 1px 0 0 0;
+    border-radius: 15px;
+    margin: 0 0 -22px 0;
+}
+
+hr.style1:before {
+    display: block;
+    content: "";
+    height: 30px;
+    margin-top: -31px;
+    border-style: solid;
+    border-color: #8c8b8b;
+    border-width: 0 0 1px 0;
+    border-radius: 15px;
+}
+
+.label {
+    font-size: small;
+    text-align: right;
+
 }
 
 .myprofile {
@@ -820,7 +846,7 @@ fieldset {
 .tab-pane {
     width: 150px;
     list-style: none;
-    margin: 0 auto;
+    margin-left: 18px;
 }
 
 .quote {
