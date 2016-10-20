@@ -1,8 +1,7 @@
 <table class="foruminfo" width="100%" cellpadding="3" cellspacing="1" border="0">
     <tr>
         <td colspan="4" height="28" align="center">
-                    <span class="bold">Forum info
-                    </span>
+            <span class="bold">Forum info</span>
         </td>
     </tr>
     <tr>
@@ -11,7 +10,8 @@
         </td>
         <td class="row1" align="left">
                     <span class="small">
-                        In total are <b>$k</b> online users : $k Registered, $k Hidden and $k Guests<br/>
+                        In total are <b>{{ 0 | Cache::get('onlineusers') }}</b> online users : {{ 0 | Cache::get('registered') }}
+                        Registered and {{ 0 | Cache::get('guests') }} Guests<br/>
                         The highest no. of connected users were <b>$k</b> on date time<br/>
                         Today registered: $k
                     </span>
