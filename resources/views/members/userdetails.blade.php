@@ -19,11 +19,15 @@
             <div class="profile_content">
                 <div class="profile_main">
                     <h1 class="username" style="font-size: large">
-                        <b><span class="username">{{ $user[0]['name'] }}</span></b>
+                        <b><span class="username">{{ $user[0]->name }}</span></b>
                     </h1>
-                    Member Since - {{ $user[0]['created_at'] }}<br/>
-                    <span data-tooltip="user status...">Online/Offline</span>
-                    <span class="activity_date">Last Active - {{ session()->get('last_activity') }}</span>
+                    Member Since - {{ $user[0]->created_at }}<br/>
+                    @if ($user[0]->user_status === 'online')
+                        <span class="user_status" style="background: #7ba60d">Online</span>
+                    @elseif ($user[0]->user_status === 'offline')
+                        <span class="user_status" style="background: gray">Offline</span>
+                    @endif
+                    <span class="activity_date">Last Active - {{ $user[0]->last_activity_date }}</span>
                 </div>
 
                 <div class="tab-content">
@@ -32,7 +36,7 @@
                             <li>
                                 <div class="inlined">
                                     <span class="label">Class:</span>
-                                    <span class="row_data">{{ $user[0]['class'] }}</span>
+                                    <span class="row_data">{{ $user[0]->class }}</span>
                                 </div>
                                 <hr class="style1">
                             </li>
@@ -54,7 +58,7 @@
                             <li>
                                 <div class="inlined">
                                     <span class="label">Member Title:</span>
-                                    <span class="row_data">{{ $user[0]['member_title'] }}</span>
+                                    <span class="row_data">{{ $user[0]->member_title }}</span>
                                 </div>
                                 <hr class="style1">
                             </li>
@@ -62,7 +66,7 @@
                             <li>
                                 <div class="inlined">
                                     <span class="label">Country:</span>
-                                    <span class="row_data">{{ $user[0]['country'] }}</span>
+                                    <span class="row_data">{{ $user[0]->country }}</span>
                                 </div>
                                 <hr class="style1">
                             </li>
@@ -72,7 +76,7 @@
                                     <span class="label">Gender:</span>
                                     <span class="row_data">
                                         <img style="top: 2px" src="{{ URL::asset('img/icons/male-icon.png') }}"
-                                             alt="Male"/> {{ $user[0]['gender'] }}
+                                             alt="Male"/> {{ $user[0]->gender }}
                                     </span>
                                 </div>
                                 <hr class="style1">

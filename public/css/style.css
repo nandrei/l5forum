@@ -843,6 +843,20 @@ hr.style1:before {
     margin: 12px;
 }
 
+.user_status {
+    vertical-align: middle;
+    display: inline-block;
+    height: 16px;
+    line-height: 16px;
+    padding: 0 5px;
+    font-size: 9px;
+    font-weight: bold;
+    text-transform: uppercase;
+    color: #fff;
+    text-shadow: rgba(0, 0, 0, 0.7) 0 -1px 0;
+    border-radius: 5px;
+}
+
 .tab-pane {
     width: 150px;
     list-style: none;
