@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Helpers;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
+use App\Http\Helpers;
 
 class MainController extends Controller
 {
@@ -69,12 +69,13 @@ class MainController extends Controller
                     $lasttopic_id = $topic['id'];
                     $lastpost = DB::table('posts')->where('topic_id', '=', $lasttopic_id)
                         ->join('users', 'users.id', '=', 'posts.author_id')
-                        ->select('posts.created_at', 'users.name as author')->get();
+                        ->select('posts.created_at', 'users.id as author_id', 'users.name as author')->get();
                     //dd($lastpost);
                     if ($subcat_id === $topic['parent_category_id']) {
                         $subcateg[$k0]['lasttopic_name'] = $topic['name'];
                         $subcateg[$k0]['lasttopic_id'] = $lasttopic_id;
                         $subcateg[$k0]['lastpost_date'] = $lastpost[$k2]->created_at;
+                        $subcateg[$k0]['lastpost_author_id'] = $lastpost[$k2]->author_id;
                         $subcateg[$k0]['lastpost_author'] = $lastpost[$k2]->author;
                     }
                 }
@@ -149,7 +150,7 @@ class MainController extends Controller
         //$posts = DB::select(DB::raw("SELECT * FROM posts WHERE topic_id = $topic_id"));
         $posts = DB::table('posts')->where('topic_id', '=', $topic_id)
             ->join('users', 'users.id', '=', 'posts.author_id')
-            ->select('posts.author_id', 'posts.content', 'posts.created_at as post_date', 'users.name as author', 'users.created_at as join_date', 'users.no_posts')
+            ->select('posts.author_id', 'posts.content', 'posts.created_at as post_date', 'users.avatar_path', 'users.name as author', 'users.class', 'users.created_at as join_date', 'users.no_posts')
             ->get();
         $posts = json_decode(json_encode($posts), true);
 
@@ -157,7 +158,9 @@ class MainController extends Controller
         foreach ($posts as $k => $post) {
             $posts[$k]['postnumber'] = $postnumber += 1;
         }
-        (new Helpers)->recordPageViews($topic_id);
+        $page_id = $request->input();
+        (new Helpers)->recordPageViews($page_id);
+//        $user_img = DB::table('profiles')->where('topic_id', '=', $topic_id)
         //dd($posts);
         return view('forum.posts', compact('posts'));
     }

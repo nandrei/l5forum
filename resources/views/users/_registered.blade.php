@@ -1,6 +1,7 @@
 <div class="user_avatar">
     <a href="{{ url('userdetails') }}?id={{ Auth::user()->id }}">
-        <img src="{{ URL::asset('img/guest.png') }}" title="View user status">
+        <img style="width: 52px; height: 58px" src="{{ url(Auth::user()->avatar_path ?: 'img/guest.png') }}"
+             title="View user status">
     </a>
 </div>
 
@@ -9,9 +10,9 @@
         Welcome, <a href="{{ url('userdetails') }}?id={{ Auth::user()->id }}">
             <span> {{ Auth::user()->name }} </span>
         </a>
-        <span>
-            [ ]
-        </span>
+        <span class="class_color">
+                [ ]
+            </span>
     </div>
     <div style="padding-top: 8px">
         <a href="#messages">
@@ -19,19 +20,19 @@
                 0
             </span>
             <span>
-                <img src="{{ URL::asset('img/icons/messages.png') }}" alt title="View your messages">
+                <img src="{{ url('img/icons/messages.png') }}" alt title="View your messages">
             </span>
         </a>
         &ensp;
         <a href="#friends">
             <span>
-                <img src="{{ URL::asset('img/icons/friends.png') }}" alt title="Open friends list">
+                <img src="{{ url('img/icons/friends.png') }}" alt title="Open friends list">
             </span>
         </a>
         &ensp;
         <a href="{{ url('profile') }}">
             <span>
-                <img src="{{ URL::asset('img/icons/profile.png') }}" alt title="Edit your profile"> Profile
+                <img src="{{ url('img/icons/profile.png') }}" alt title="Edit your profile"> Profile
             </span>
         </a>
         &ensp;
@@ -39,7 +40,7 @@
            onclick="event.preventDefault();
                 document.getElementById('logout-form').submit();">
             <span>
-                <img src="{{ URL::asset('img/icons/logout.png') }}" alt title="Log out"> Logout
+                <img src="{{ url('img/icons/logout.png') }}" alt title="Log out"> Logout
             </span>
         </a>
         <form id="logout-form" action="{{ url('/logout') }}" method="POST" style="display: none;">

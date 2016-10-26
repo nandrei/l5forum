@@ -696,7 +696,7 @@ fieldset {
     font-size: 10px;
 }
 
-#forummain .lastpostername {
+#forummain .lastpostauthor {
     font-size: 10px;
 }
 
@@ -780,6 +780,7 @@ fieldset {
     background: #2c3e50;
     border: 1px solid #2e465d;
     border-radius: 5px;
+    margin-bottom: 32px;
 }
 
 .profile_content {

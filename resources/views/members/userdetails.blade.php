@@ -6,7 +6,8 @@
         <div class="blue_bg" style="height: 410px; background-color: #22313f;">
             <div class="myprofile">
                 <p class="user_photo">
-                    <img class="user_photo" src="{{ URL::asset("img/guest.png") }}" alt="user&#39;s Photo"/>
+                    <img class="user_photo" src="{{ url($user[0]->avatar_path ?: 'img/icons/guest.png') }}" alt
+                         title="user&#39;s Photo"/>
                 </p>
 
                 <ul class="tab-pane">
@@ -50,7 +51,7 @@
                             <li>
                                 <div class="inlined">
                                     <span class="label">Profile Views:</span>
-                                    <span class="row_data">0</span>
+                                    <span class="row_data">{{ $user[0]->profile_views }}</span>
                                 </div>
                                 <hr class="style1">
                             </li>
@@ -75,7 +76,7 @@
                                 <div class="inlined">
                                     <span class="label">Gender:</span>
                                     <span class="row_data">
-                                        <img style="top: 2px" src="{{ URL::asset('img/icons/male-icon.png') }}"
+                                        <img style="top: 2px" src="{{ url('img/icons/male-icon.png') }}"
                                              alt="Male"/> {{ $user[0]->gender }}
                                     </span>
                                 </div>

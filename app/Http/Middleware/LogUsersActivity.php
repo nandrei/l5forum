@@ -19,47 +19,48 @@ class LogUsersActivity
     {
         $response = $next($request);
 
-        $memcache = new Cache();
-        $reqtime = strtotime(Carbon::now());
-        $memcache::put('reqtime', $reqtime, 5);
+        $sessionId = $request->session()->getId();
+        $user_id = (auth()->check()) ? auth()->user()->id : \Auth::id();
         $user_ip = $_SERVER["REMOTE_ADDR"];
+        $payload = json_encode($request->session()->all());
 
-        if (!$memcache::has($user_ip)) {
-            $memcache::put($user_ip, 0, 5);
-        }
-        //$memcache::flush();
-        //Perform action every 5 min.
-        if ($memcache::get('reqtime') >= $memcache::get($user_ip)) {
-
-            $sessionId = $request->session()->getId();
-            $user_id = (auth()->check()) ? auth()->user()->id : \Auth::id();
-            $payload = json_encode($request->session()->all());
-            $ip_address = \DB::table('sessions')->where('ip_address', $user_ip)->get();
-
-            //Write user inf in sessions table.
-            if (!$ip_address->first()) {
+        //Write user inf in sessions table.
+        if (auth()->check()) {
+            //Check if auth user log exists;
+            $auth_user_log = \DB::table('sessions')->where('user_id', $user_id)->first();
+            if (empty($auth_user_log)) {
                 \DB::table('sessions')->insert([
                     'id' => $sessionId, 'user_id' => $user_id, 'ip_address' => $user_ip, 'payload' => base64_encode($payload), 'last_activity' => time(),
                 ]);
             } else {
-                \DB::table('sessions')->where('ip_address', $user_ip)->update([
-                    'id' => $sessionId, 'user_id' => $user_id, 'payload' => base64_encode($payload), 'last_activity' => time(),
+                \DB::table('sessions')->where('user_id', $user_id)->update([
+                    'id' => $sessionId, 'ip_address' => $user_ip, 'payload' => base64_encode($payload), 'last_activity' => time(),
                 ]);
             }
-            $expireAt = strtotime(Carbon::now()->addMinutes(5));
-            $memcache::put($user_ip, $expireAt, 5);
-
-            //Get online users from sessions table.
-            $registered = \DB::table('sessions')->whereNotNull('user_id')
-                ->where('last_activity', '>=', strtotime(Carbon::now()->subMinutes(5)))->count();
-            $guests = \DB::table('sessions')->whereNull('user_id')
-                ->where('last_activity', '>=', strtotime(Carbon::now()->subMinutes(5)))->count();
-            $onlineusers = $registered + $guests;
-            $memcache::put('onlineusers', $onlineusers, 10);
-            $memcache::put('registered', $registered, 10);
-            $memcache::put('guests', $guests, 10);
-            //dd($registered, $guests);
+        } else {
+            //Check if guest user log exists;
+            $guest_user_log = \DB::table('sessions')->where('id', $sessionId)->first();
+            if (empty($guest_user_log)) {
+                \DB::table('sessions')->insert([
+                    'id' => $sessionId, 'user_id' => $user_id, 'ip_address' => $user_ip, 'payload' => base64_encode($payload), 'last_activity' => time(),
+                ]);
+            } else {
+                \DB::table('sessions')->where('id', $sessionId)->update([
+                    'user_id' => $user_id, 'ip_address' => $user_ip, 'payload' => base64_encode($payload), 'last_activity' => time(),
+                ]);
+            }
         }
+        //Get online users from sessions table.
+        $registered = \DB::table('sessions')->whereNotNull('user_id')
+            ->where('last_activity', '>=', strtotime(Carbon::now()))->count();
+        $guests = \DB::table('sessions')->whereNull('user_id')
+            ->where('last_activity', '>=', strtotime(Carbon::now()))->count();
+        $onlineusers = $registered + $guests;
+        Cache::put('onlineusers', $onlineusers, 10);
+        Cache::put('registered', $registered, 10);
+        Cache::put('guests', $guests, 10);
+        //dd($registered, $guests);
+
         return $response;
     }
 }

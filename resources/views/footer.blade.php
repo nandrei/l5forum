@@ -6,7 +6,7 @@
     </tr>
     <tr>
         <td align="center" valign="middle">
-            <img src="{{ URL::asset('img/icons/connected.png') }}" alt="Who is online"/>
+            <img src="{{ url('img/icons/connected.png') }}" alt="Who is online"/>
         </td>
         <td class="row1" align="left">
                     <span class="small">
@@ -16,7 +16,7 @@
                         Today registered: $k
                     </span>
         </td>
-        <td align="center" valign="middle"><img src="{{ URL::asset('img/icons/forumstats.png') }}"
+        <td align="center" valign="middle"><img src="{{ url('img/icons/forumstats.png') }}"
                                                 alt="Forum stats"/></td>
         <td class="row2" align="left">
                     <span class="small">

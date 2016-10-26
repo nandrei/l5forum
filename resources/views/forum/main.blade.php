@@ -16,7 +16,7 @@
                         <div class="forumrow">
                             <div class="forumcell" align="left" style="width: 50%">
                                 <div class="forumcellinside" style="padding: 5px">
-                                    <img src="{{ URL::asset('img/icons/forum-newposts.png') }}">
+                                    <img src="{{ url('img/icons/forum-newposts.png') }}">
                                 </div>
                                 <div class="forumcellinside">
                                     <div>
@@ -56,7 +56,9 @@
                                     <div>
                                         @if (isset($subcategory['lastpost_date']))
                                             <span class="lastpostdate">{{ $subcategory['lastpost_date'] }} by</span>
-                                            <span class="lastpostername">{{ $subcategory['lastpost_author'] }}</span>
+                                            <span class="lastpostauthor">
+                                                <a href="{{ url('userdetails') }}?id={{ $subcategory['lastpost_author_id'] }}">{{ $subcategory['lastpost_author'] }}</a>
+                                            </span>
                                         @endif
                                     </div>
 

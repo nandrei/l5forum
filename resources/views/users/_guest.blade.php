@@ -1,6 +1,6 @@
 <div class="user_avatar">
     <a href="#">
-        <img src="{{ URL::asset('img/guest.png') }}" title="Guest">
+        <img src="{{ url('img/guest.png') }}" title="Guest">
     </a>
 </div>
 

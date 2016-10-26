@@ -39,7 +39,7 @@
                     <div class="viewforumrow">
                         <div class="viewforumcell" align="left" style="width:50%">
                             <div class="viewforumcellinside" style="padding:0 15px 0 5px">
-                                <img src={{ URL::asset('img/icons/forum-newposts.png') }} alt=""/>
+                                <img src={{ url('img/icons/forum-newposts.png') }} alt=""/>
                             </div>
                             <div class="viewforumcellinside">
 					        <div>

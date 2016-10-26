@@ -28,10 +28,10 @@
                 </tr>
                 <tr valign="top">
                     <td width="120" align="center">
-                        <img style="width:120px; max-height:180px" src="{{ URL::asset('img/guest.png') }}">
+                        <img style="width:120px; max-height:180px" src="{{ url('img/guest.png') }}">
                         <div align="left" style="margin-bottom: 5px">
                             <div style="margin: 2px 5px">
-                                <span class="small"><b>Class: member</b></span>
+                                <span class="small"><b>Class: {{ $post['class'] }}</b></span>
                             </div>
                             <div style="margin: -2px 5px">
                                 <span class="small"><b>Posts: {{ $post['no_posts'] }}</b></span>

@@ -2,8 +2,6 @@
 
 namespace App\Http;
 
-use Illuminate\Support\Facades\Cache;
-
 /**
  * Records number of requests of a page.
  *
@@ -13,19 +11,14 @@ Class Helpers
 {
     function recordPageViews($page_id)
     {
-        $memcache = new Cache();
-        $key = $page_id;
-
-        if (!$memcache::get($key)) {
-            $memcache::put($key, 0, 10);
-        }
-        $new_count = $memcache::increment($key);
-
-        if ($new_count >= 5) {
-
-            $sql = "UPDATE topics SET views = views + $new_count WHERE id = $page_id";
+        if (isset($page_id['topic_id'])) {
+            $topic_id = $page_id['topic_id'];
+            $sql = "UPDATE topics SET views = views + 1 WHERE id = $topic_id";
             \DB::update(\DB::raw($sql));
-            $memcache::pull($key);
+        } elseif (isset($page_id['id'])) {
+            $user_id = $page_id['id'];
+            $sql = "UPDATE profiles SET profile_views = profile_views + 1 WHERE id = $user_id";
+            \DB::update(\DB::raw($sql));
         }
     }
 }
