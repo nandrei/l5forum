@@ -48,6 +48,11 @@ Route::get('profile', array(
     'uses' => 'MembersController@showMemberProfile'
 ));
 
+Route::post('updateprofile', array(
+    'as' => 'updateprofile',
+    'uses' => 'MembersController@updateMemberProfile'
+));
+
 Route::get('members', array(
     'as' => 'members',
     'uses' => 'MembersController@listAllMembers'
