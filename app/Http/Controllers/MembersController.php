@@ -9,16 +9,6 @@ use App\Http\Helpers;
 
 class MembersController extends Controller
 {
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
-
     public function showMemberDetails(Request $request)
     {
         $user_id = $request->input('id');
@@ -26,6 +16,7 @@ class MembersController extends Controller
         $user = DB::select(DB::raw($sql));
 
         $last_activity = DB::select(DB::raw("SELECT last_activity FROM sessions WHERE user_id = $user_id"));
+        //dd($last_activity);
         $user_last_activity = date('Y-m-d G:i:s', $last_activity[0]->last_activity);
         $user[0]->last_activity_date = $user_last_activity;
 
@@ -97,9 +88,10 @@ class MembersController extends Controller
 
                 imagecopyresampled($tmp, $src, 0, 0, 0, 0, $tw, $th, $w, $h);
                 imageconvolution($tmp, array(array(-1, -1, -1), array(-1, 16, -1), array(-1, -1, -1)), 8, 0);
-                imagejpeg($tmp, $img_path);
+                imagejpeg($tmp, $img_path, 75);
                 imagedestroy($tmp);
                 imagedestroy($src);
+                DB::table('users')->where('id', $user_id)->update(['avatar_path' => 'img/avatars/' . $filename]);
             }
         }
         return redirect('profile');
