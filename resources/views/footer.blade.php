@@ -10,21 +10,21 @@
         </td>
         <td class="row1" align="left">
                     <span class="small">
-                        In total are <b>{{ 0 | Session::get('online_users') }}</b> online users : {{ 0 | Session::get('members') }}
-                        members and {{ 0 | Session::get('guests') }} guests<br/>
-                        The highest no. of online users were <b>{{ Session::get('hi_no_online') }}</b> on {{ Session::get('hi_no_online_date') }}
+                        In total are <b>{{ 0 | $GLOBALS['foruminfo']['online_users'] }}</b> online users : {{ 0 | $GLOBALS['foruminfo']['members'] }}
+                        members and {{ 0 | $GLOBALS['foruminfo']['guests'] }} guests<br/>
+                        The highest no. of online users were <b>{{ $GLOBALS['foruminfo']['hi_no_online'] }}</b> on {{ $GLOBALS['foruminfo']['hi_no_online_date'] }}
                         <br/>
-                        Today registered: {{ 0 | Session::get('today_registered') }}
+                        Today registered: {{ 0 | $GLOBALS['foruminfo']['today_registered'] }}
                     </span>
         </td>
         <td align="center" valign="middle"><img src="{{ url('img/icons/forumstats.png') }}"
                                                 alt="Forum stats"/></td>
         <td class="row2" align="left">
                     <span class="small">
-                        Total number of posts is <b>{{ 0 | Session::get('total_posts') }}</b><br/>
-                        We have <b>{{ 0 | Session::get('total_members') }}</b> members<br/>
+                        Total number of posts is <b>{{ 0 | $GLOBALS['foruminfo']['total_posts'] }}</b><br/>
+                        We have <b>{{ 0 | $GLOBALS['foruminfo']['total_members'] }}</b> members<br/>
                         The newest member is: <b><a
-                                    href="{{ url('userdetails') }}?id={{ Session::get('last_member_id') }}">{{ Session::get('last_member_name') }}</a></b>
+                                    href="{{ url('userdetails') }}?id={{ $GLOBALS['foruminfo']['last_member_id'] }}">{{ $GLOBALS['foruminfo']['last_member_name'] }}</a></b>
                     </span>
         </td>
     </tr>

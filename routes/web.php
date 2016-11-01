@@ -33,9 +33,14 @@ Route::get('topic/{topic}', array(
     'uses' => 'MainController@showPosts'
 ));
 
-Route::any('subcategory/newtopic/create', array(
+Route::any('newtopic/create', array(
     'as' => 'newtopic',
-    'uses' => 'MainController@createTopic'
+    'uses' => 'MainController@createNewTopic'
+));
+
+Route::any('newreply/create', array(
+    'as' => 'newreply',
+    'uses' => 'MainController@createNewReply'
 ));
 
 Route::get('userdetails', array(

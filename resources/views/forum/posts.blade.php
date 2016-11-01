@@ -14,6 +14,23 @@
             </div>
         </div>
 
+        <div style="float:right;margin:14px 25px 0 0;">
+            @if(Auth::user())
+                <input id="action" type="hidden" name="action" value="newreply">
+                <input id="topic_id" type="hidden" name="topic_id" value="{{ $topic_id }}">
+                <input id="newreply" type=button value="Reply to this topic" class="btn"/>
+            @else
+                <input id="login-toogle" type=button value="Log in to reply" class="btn"/>
+            @endif
+        </div>
+        <div class="clearfix"></div>
+
+        <div id="Wysiwyg_editor">
+
+            @yield('editor')
+
+        </div>
+
         @foreach($posts as $post)
             <table width="100%" cellspacing="0" cellpadding="0">
                 <tr>

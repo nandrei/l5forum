@@ -162,10 +162,10 @@ class MainController extends Controller
         (new Helpers)->recordPageViews($page_id);
 //        $user_img = DB::table('profiles')->where('topic_id', '=', $topic_id)
         //dd($posts);
-        return view('forum.posts', compact('posts'));
+        return view('forum.posts', compact('posts', 'topic_id'));
     }
 
-    public function createTopic(Request $request)
+    public function createNewTopic(Request $request)
     {
         if ($request->input('action') === 'newtopic') {
 
@@ -181,14 +181,32 @@ class MainController extends Controller
             $post = $request->input('post');
 
             $newtopic_id = DB::table('topics')->max('id') + 1;
-            $newpost_id = DB::table('posts')->max('id') + 1;
 
-            $sql = "INSERT INTO topics (id, parent_category_id, name, author_id)
-                                  VALUES ('$newtopic_id', '$subcat_id', '$topic', '$user_id')
-                    INSERT INTO posts (id, topic_id, author_id, content)
-                                  VALUES ('$newpost_id', '$newtopic_id', '$user_id', '$post')";
+            $sql = "INSERT INTO topics (parent_category_id, name, author_id)
+                                  VALUES ('$subcat_id', '$topic', '$user_id')
+                    INSERT INTO posts (topic_id, author_id, content)
+                                  VALUES ('$newtopic_id', '$user_id', '$post')";
             DB::insert(DB::raw($sql));
         }
         return redirect('subcategory?subcat_id=' . $subcat_id);
+    }
+
+    public function createNewReply(Request $request)
+    {
+        $topic_id = $request->input('topic_id');
+        //dd($request->input());
+        return view('forum.newreply', compact('topic_id'));
+
+//        if ($request->input('action') === 'newreply') {
+//
+//            $topic_id = $request->input('topic_id');
+//
+//            return view('forum.newreply', compact('topic_id'));
+//
+//        } elseif ($request->input('action') === 'savetopic') {
+//
+//            $topic_id = $request->input('topic_id');
+//        }
+//        return redirect('topic?topic_id=' . $topic_id);
     }
 }
