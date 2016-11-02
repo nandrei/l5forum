@@ -13,7 +13,12 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
+//        \View::composer('*', function($view)
+//        {
+//            $navlinks = session()->get('navlinks');
+//            $view->with('navlinks', $navlinks);
+//            //dd(compact('navlinks'));
+//        });
     }
 
     /**

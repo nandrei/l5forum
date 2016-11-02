@@ -71,22 +71,22 @@ class LogUsersActivity
         $guests = \DB::table('sessions')->whereNull('user_id')
             ->where('last_activity', '>=', strtotime(Carbon::now()->subSeconds(2)))->count();
         $online_users = $members + $guests;
-        $request->session()->put('members', $members);
-        $request->session()->put('guests', $guests);
-        $request->session()->put('online_users', $online_users);
+        $foruminfo['members'] = $members;
+        $foruminfo['guests'] = $guests;
+        $foruminfo['online_users'] = $online_users;
 
         $total_posts = \DB::table('posts')->count();
         $total_members = \DB::table('users')->count();
         $last_member = \DB::table('users')->orderBy('created_at', 'desc')->first();
-        $request->session()->put('total_posts', $total_posts);
-        $request->session()->put('total_members', $total_members);
-        $request->session()->put('last_member_id', $last_member->id);
-        $request->session()->put('last_member_name', $last_member->name);
+        $foruminfo['total_posts'] = $total_posts;
+        $foruminfo['total_members'] = $total_members;
+        $foruminfo['last_member_id'] = $last_member->id;
+        $foruminfo['last_member_name'] = $last_member->name;
 
         $today = Carbon::today()->toDateTimeString();
         $tomorrow = Carbon::tomorrow()->toDateTimeString();
         $today_registered = \DB::table('users')->whereBetween('created_at', [$today, $tomorrow])->count();
-        $request->session()->put('today_registered', $today_registered);
+        $foruminfo['today_registered'] = $today_registered;
 
         $hi_no_conn_users = \DB::table('users_activity')->first();
         //dd($hi_no_conn_users);
@@ -95,10 +95,11 @@ class LogUsersActivity
         } elseif ($online_users > $hi_no_conn_users->hi_no_online) {
             \DB::table('users_activity')->update(['hi_no_online' => $online_users, 'hi_no_online_date' => Carbon::now()->toDateTimeString()]);
         }
-        $request->session()->put('hi_no_online', $hi_no_conn_users->hi_no_online);
-        $request->session()->put('hi_no_online_date', $hi_no_conn_users->hi_no_online_date);
-        //dd($request->session()->all());
+        $foruminfo['hi_no_online'] = $hi_no_conn_users->hi_no_online;
+        $foruminfo['hi_no_online_date'] = $hi_no_conn_users->hi_no_online_date;
+        $GLOBALS['foruminfo'] = $foruminfo;
+        //dd($GLOBALS['foruminfo']);
 
-        return $response;
+        return $next($request);
     }
 }

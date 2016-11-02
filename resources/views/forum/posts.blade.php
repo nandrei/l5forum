@@ -25,12 +25,6 @@
         </div>
         <div class="clearfix"></div>
 
-        <div id="Wysiwyg_editor">
-
-            @yield('editor')
-
-        </div>
-
         @foreach($posts as $post)
             <table width="100%" cellspacing="0" cellpadding="0">
                 <tr>
@@ -65,6 +59,7 @@
                 </tr>
             </table>
         @endforeach
+        <div id="Wysiwyg_editor"></div>
     </div>
 
 @endsection

@@ -8,6 +8,9 @@ var baseUrl = 'http://host1.hostmama.ro/~rowebsol/rowebsolutions.tk/andrei/l5for
 var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
 
 $('#newreply').click(function () {
+    $('html, body').animate({
+        scrollTop: $("#Wysiwyg_editor").offset().top
+    }, 'fast');
     var url = baseUrl + '/newreply/create';
     var action = document.getElementById('action').value;
     var topic_id = document.getElementById('topic_id').value;
@@ -22,6 +25,6 @@ $('#newreply').click(function () {
     });
     request.done(function (response) {
         $("#Wysiwyg_editor").html(response);
-        console.log('response server', response);
+        //console.log('response server', response);
     });
 });

@@ -15,7 +15,7 @@ html, body {
 }
 
 body {
-    background: grey url("../img/bg.jpg") no-repeat;
+    background: grey url("../img/bg.jpg");
     font-family: "Helvetica Neue", Arial, sans-serif;
     font-size: 10pt;
     margin: 0;
@@ -418,16 +418,22 @@ select {
     border-radius: 4px;
 }
 
-textarea {
+.editor-box {
+    margin: auto;
+    width: 854px;
+}
+
+textarea.form-control {
     font-size: 8pt;
     color: #E0E0E0;
     background: #34495E;
     border: 1px solid #22313F;
     border-top: 1px solid #2e465d;
     border-bottom: 1px solid #2e465d;
-    max-width: 650px !important;
+    max-width: 854px !important;
     max-height: 300px !important;
     border-radius: 3px;
+    margin: auto;
 }
 
 input {

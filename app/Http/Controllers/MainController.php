@@ -194,8 +194,10 @@ class MainController extends Controller
     public function createNewReply(Request $request)
     {
         $topic_id = $request->input('topic_id');
-        //dd($request->input());
-        return view('forum.newreply', compact('topic_id'));
+
+        $topic = DB::table('topics')->where('id', $topic_id)->first();
+
+        return view('forum.newreply', compact('topic'));
 
 //        if ($request->input('action') === 'newreply') {
 //
