@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use App\Http\Helpers;
@@ -167,48 +168,54 @@ class MainController extends Controller
 
     public function createNewTopic(Request $request)
     {
+        $subcat_id = $request->input('subcat_id');
+
         if ($request->input('action') === 'newtopic') {
 
-            $subcat_id = $request->input('subcat_id');
+            $subcategory = DB::table('subcategories')->where('id', $subcat_id)->first();
 
-            return view('forum.newtopic', compact('subcat_id'));
-
+            return view('forum.htmleditor', compact('subcategory'));
         } elseif ($request->input('action') === 'savetopic') {
 
-            $subcat_id = $request->input('subcat_id');
             $user_id = \Auth::user()->id;
-            $topic = $request->input('topic');
-            $post = $request->input('post');
+            $topic_title = $request->input('title');
+            $post_content = $request->input('post_content');
 
+            $created_at = Carbon::now()->toDateTimeString();
             $newtopic_id = DB::table('topics')->max('id') + 1;
 
-            $sql = "INSERT INTO topics (parent_category_id, name, author_id)
-                                  VALUES ('$subcat_id', '$topic', '$user_id')
-                    INSERT INTO posts (topic_id, author_id, content)
-                                  VALUES ('$newtopic_id', '$user_id', '$post')";
-            DB::insert(DB::raw($sql));
+            DB::table('topics')->insert(['parent_category_id' => $subcat_id, 'name' => $topic_title,
+                'author_id' => $user_id, 'created_at' => $created_at]);
+            DB::table('posts')->insert(['topic_id' => $newtopic_id, 'author_id' => $user_id,
+                'content' => $post_content, 'created_at' => $created_at]);
+
+            return redirect('subcategory?subcat_id=' . $subcat_id);
         }
-        return redirect('subcategory?subcat_id=' . $subcat_id);
+        return false;
     }
 
     public function createNewReply(Request $request)
     {
         $topic_id = $request->input('topic_id');
 
-        $topic = DB::table('topics')->where('id', $topic_id)->first();
+        if ($request->input('action') === 'newreply') {
 
-        return view('forum.newreply', compact('topic'));
+            $topic = DB::table('topics')->where('id', $topic_id)->first();
 
-//        if ($request->input('action') === 'newreply') {
+            return view('forum.htmleditor', compact('topic'));
+        }
 //
-//            $topic_id = $request->input('topic_id');
-//
-//            return view('forum.newreply', compact('topic_id'));
-//
-//        } elseif ($request->input('action') === 'savetopic') {
-//
-//            $topic_id = $request->input('topic_id');
-//        }
-//        return redirect('topic?topic_id=' . $topic_id);
+        elseif ($request->input('action') === 'savereply') {
+
+            $user_id = \Auth::user()->id;
+            $post_content = $request->input('post_content');
+            $created_at = Carbon::now()->toDateTimeString();
+
+            DB::table('posts')->insert(['topic_id' => $topic_id, 'author_id' => $user_id,
+                'content' => $post_content, 'created_at' => $created_at]);
+
+            return redirect('topic?topic_id=' . $topic_id);
+        }
+        return false;
     }
 }

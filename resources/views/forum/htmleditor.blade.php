@@ -20,29 +20,16 @@
 <link rel="stylesheet" href="{!! asset('../resources/assets/froala_editor/css/plugins/image.css') !!}">
 <link rel="stylesheet" href="{!! asset('../resources/assets/froala_editor/css/plugins/image_manager.css') !!}">
 <link rel="stylesheet" href="{!! asset('../resources/assets/froala_editor/css/plugins/line_breaker.css') !!}">
-<link rel="stylesheet" href="{!! asset('../resources/assets/froala_editor/css/plugins/quick_insert.css') !!}">
+{{--<link rel="stylesheet" href="{!! asset('../resources/assets/froala_editor/css/plugins/quick_insert.css') !!}">--}}
 <link rel="stylesheet" href="{!! asset('../resources/assets/froala_editor/css/plugins/table.css') !!}">
 <link rel="stylesheet" href="{!! asset('../resources/assets/froala_editor/css/plugins/video.css') !!}">
 
-{{ Form::open(['route' => 'newreply']) }}
-<div class="editor-box">
-    {{--<div class="form-group">--}}
-    {{--{{ Form::label('title', 'Title') }}--}}
-    {{--{{ Form::text('title',null,array('class' => 'form-control', 'placeholder'=>'Title')) }}--}}
-    {{--</div>--}}
-    <div class="forum-header" style="margin-top: 25px; width:854px;">
-        Replying to {{ $topic->name }} topic
-    </div>
-    <div class="form-group">
-        {{ Form::textarea('body',null,array('class' => 'form-control', 'placeholder'=>'Content', 'id' => 'editor')) }}
-    </div>
-    <div class="form-group">
-        {{ Form::submit('Add reply', array('class' => 'btn btn-primary btn-sm')) }}
-        <input id="cancel" type=button value="Cancel" class="btn btn-default btn-sm"/>
-    </div>
-
-</div>
-{{ Form::close() }}
+<!-- Include Forms for creating topics or replies. -->
+@if (isset($subcategory))
+    @include('partials.newtopic_form')
+@elseif(isset($topic))
+    @include('partials.newreply_form')
+@endif
 
 <!-- Include JS files. -->
 <script type="text/javascript"
@@ -86,8 +73,8 @@
         src="{!! asset('../resources/assets/froala_editor/js/plugins/paragraph_format.min.js') !!}"></script>
 <script type="text/javascript"
         src="{!! asset('../resources/assets/froala_editor/js/plugins/paragraph_style.min.js') !!}"></script>
-<script type="text/javascript"
-        src="{!! asset('../resources/assets/froala_editor/js/plugins/quick_insert.min.js') !!}"></script>
+{{--<script type="text/javascript"--}}
+{{--src="{!! asset('../resources/assets/froala_editor/js/plugins/quick_insert.min.js') !!}"></script>--}}
 <script type="text/javascript"
         src="{!! asset('../resources/assets/froala_editor/js/plugins/quote.min.js') !!}"></script>
 <script type="text/javascript"
@@ -104,8 +91,9 @@
 <script>
     $(function () {
         $('#editor').froalaEditor({
-            key: 'ACTIVATION_KEY',
-            height: 200
+            placeholderText: 'Content',
+            heightMin: 150,
+            heightMax: 300
         });
     });
 </script>

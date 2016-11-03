@@ -15,16 +15,15 @@
         </div>
         <div style="float:right;margin:14px 25px 0 0;">
             @if(Auth::user())
-                <form method="get" action="{{ route('newtopic') }}">
-                    <input type="hidden" name="action" value="newtopic">
-                    <input type="hidden" name="subcat_id" value="{{ $subcat_id }}">
-                    <input type=submit value="New topic" alt="Create new topic" class="btn"/>
-                </form>
+                <input id="action" type="hidden" name="action" value="newtopic">
+                <input id="subcat_id" type="hidden" name="subcat_id" value="{{ $subcat_id }}">
+                <input id="newtopic" type=submit value="New topic" title="Create new topic" class="btn"/>
             @else
                 <input id="login-toogle" type=button value="Log in to create new topic" class="btn"/>
             @endif
         </div>
         <div class="clearfix"></div>
+        <div id="topic_editor"></div>
 
         <form action="?" method="post" name="multiact">
             <div id="viewforum">

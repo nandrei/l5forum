@@ -3,6 +3,9 @@
 @section('content')
 
     <div class="forum-innercontent">
+        <!-- CSS rules for styling the element inside the editor such as p, h1, h2, etc. -->
+        <link href="{!! asset('../resources/assets/froala_editor/css/froala_style.min.css') !!}" rel="stylesheet"
+              type="text/css"/>
 
         @include('partials.breadcrumbs')
 
@@ -55,11 +58,15 @@
                             </div>
                         </div>
                     </td>
-                    <td style="padding: 10px">{{ $post['content'] }}</td>
+                    <td style="padding: 10px">
+                        <div class="fr-view">
+                            {{ $post['content'] }}
+                        </div>
+                    </td>
                 </tr>
             </table>
         @endforeach
-        <div id="Wysiwyg_editor"></div>
+        <div id="reply_editor"></div>
     </div>
 
 @endsection
