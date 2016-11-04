@@ -23,9 +23,7 @@
             @endif
         </div>
         <div class="clearfix"></div>
-        <div id="topic_editor"></div>
 
-        <form action="?" method="post" name="multiact">
             <div id="viewforum">
                 <div class="viewforumheader">
                     <div class="viewforumcell" align="left" style="width:50%"><b>Topics</b></div>
@@ -86,8 +84,8 @@
                         <div class="clearfix"></div>
                     </div>
                 @endforeach
+                <div id="topic_editor"></div>
             </div>
-        </form>
     </div>
 
 @endsection

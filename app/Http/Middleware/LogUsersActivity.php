@@ -16,8 +16,6 @@ class LogUsersActivity
      */
     public function handle($request, Closure $next)
     {
-        $response = $next($request);
-
         $sessionId = $request->session()->getId();
         $user_id = (auth()->check()) ? auth()->user()->id : \Auth::id();
         $user_ip = $_SERVER["REMOTE_ADDR"];

@@ -1,4 +1,4 @@
-{{ Form::open(['route' => 'newreply']) }}
+{{ Form::open(array('route' => 'newreply')) }}
 <div class="editor-box">
     <div class="forum-header" style="margin-top: 25px; width:854px;">
         Replying to {{ $topic->name }}

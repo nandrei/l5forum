@@ -152,7 +152,7 @@ class MainController extends Controller
         $posts = DB::table('posts')->where('topic_id', '=', $topic_id)
             ->join('users', 'users.id', '=', 'posts.author_id')
             ->select('posts.author_id', 'posts.content', 'posts.created_at as post_date', 'users.avatar_path', 'users.name as author', 'users.class', 'users.created_at as join_date', 'users.no_posts')
-            ->get();
+            ->orderBy('post_date', 'asc')->get();
         $posts = json_decode(json_encode($posts), true);
 
         $postnumber = 0;
@@ -161,7 +161,6 @@ class MainController extends Controller
         }
         $page_id = $request->input();
         (new Helpers)->recordPageViews($page_id);
-//        $user_img = DB::table('profiles')->where('topic_id', '=', $topic_id)
         //dd($posts);
         return view('forum.posts', compact('posts', 'topic_id'));
     }
@@ -169,12 +168,12 @@ class MainController extends Controller
     public function createNewTopic(Request $request)
     {
         $subcat_id = $request->input('subcat_id');
+        $subcategory = DB::table('subcategories')->where('id', $subcat_id)->first();
 
         if ($request->input('action') === 'newtopic') {
 
-            $subcategory = DB::table('subcategories')->where('id', $subcat_id)->first();
-
             return view('forum.htmleditor', compact('subcategory'));
+
         } elseif ($request->input('action') === 'savetopic') {
 
             $user_id = \Auth::user()->id;
@@ -189,7 +188,7 @@ class MainController extends Controller
             DB::table('posts')->insert(['topic_id' => $newtopic_id, 'author_id' => $user_id,
                 'content' => $post_content, 'created_at' => $created_at]);
 
-            return redirect('subcategory?subcat_id=' . $subcat_id);
+            return redirect('subcategory/' . $subcategory->name . '?subcat_id=' . $subcat_id);
         }
         return false;
     }
@@ -197,10 +196,9 @@ class MainController extends Controller
     public function createNewReply(Request $request)
     {
         $topic_id = $request->input('topic_id');
+        $topic = DB::table('topics')->where('id', $topic_id)->first();
 
         if ($request->input('action') === 'newreply') {
-
-            $topic = DB::table('topics')->where('id', $topic_id)->first();
 
             return view('forum.htmleditor', compact('topic'));
         }
@@ -214,7 +212,7 @@ class MainController extends Controller
             DB::table('posts')->insert(['topic_id' => $topic_id, 'author_id' => $user_id,
                 'content' => $post_content, 'created_at' => $created_at]);
 
-            return redirect('topic?topic_id=' . $topic_id);
+            return redirect('topic/' . $topic->name . '?topic_id=' . $topic_id);
         }
         return false;
     }

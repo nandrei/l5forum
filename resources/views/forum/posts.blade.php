@@ -42,7 +42,8 @@
                 </tr>
                 <tr valign="top">
                     <td width="120" align="center">
-                        <img style="width:120px; max-height:180px" src="{{ url('img/guest.png') }}">
+                        <img style="width:120px; max-height:180px"
+                             src="{{ url($post['avatar_path'] ?: 'img/icons/guest.png') }}">
                         <div align="left" style="margin-bottom: 5px">
                             <div style="margin: 2px 5px">
                                 <span class="small"><b>Class: {{ $post['class'] }}</b></span>
@@ -60,7 +61,7 @@
                     </td>
                     <td style="padding: 10px">
                         <div class="fr-view">
-                            {{ $post['content'] }}
+                            {!! $post['content'] !!}
                         </div>
                     </td>
                 </tr>

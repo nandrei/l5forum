@@ -1,7 +1,7 @@
-{{ Form::open(['route' => 'newtopic']) }}
+{{ Form::open(array('route' => 'newtopic')) }}
 <div class="editor-box">
     <div class="forum-header" style="margin-top: 25px; width:854px;">
-        {{ $subcategory->name }} - new topic
+        {{ $subcategory->name }} - create new topic
     </div>
     {{ Form::hidden('action', 'savetopic' ) }}
     {{ Form::hidden('subcat_id', $subcategory->id ) }}
