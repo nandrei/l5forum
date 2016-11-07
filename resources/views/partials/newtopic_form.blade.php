@@ -14,7 +14,7 @@
     </div>
     <div class="form-group">
         {{ Form::submit('Add topic', array('class' => 'btn btn-primary btn-sm')) }}
-        <input id="cancel" type=button value="Cancel" class="btn btn-default btn-sm"/>
+        {{ Form::submit('Cancel', array('class' => 'btn btn-default btn-sm', 'id' => 'cancel_edit')) }}
     </div>
 </div>
 {{ Form::close() }}

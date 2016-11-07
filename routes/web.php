@@ -58,6 +58,11 @@ Route::post('updateprofile', array(
     'uses' => 'MembersController@updateMemberProfile'
 ));
 
+Route::any('search', array(
+    'as' => 'search',
+    'uses' => 'MainController@forumSearch'
+));
+
 Route::get('members', array(
     'as' => 'members',
     'uses' => 'MembersController@listAllMembers'

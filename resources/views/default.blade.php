@@ -37,10 +37,10 @@
             <div id="navigation">
                 <div id="nav">
                     <ul>
-                        <li class="fleft active"><a href="{{ route('homepage') }}">Home</a></li>
-                        <li class="fleft"><a href="#">Cautare</a></li>
+                        <li class="fleft"><a href="{{ route('homepage') }}">Home</a></li>
+                        <li class="fleft"><a href="#" id="search">Search</a></li>
                         <li class="fleft"><a href="{{ url('/members') }}">Members</a></li>
-                        <li class="fleft"><a href="#">Regulament</a></li>
+                        <li class="fleft"><a href="#">Rules</a></li>
                         <li class="fleft"><a target='_blank' href="//github.com/nandrei">Contact</a></li>
                     </ul>
                 </div>
@@ -51,6 +51,7 @@
 
     <div id="container">
 
+        <div id="search_form"></div>
         @yield('content')
 
     </div>

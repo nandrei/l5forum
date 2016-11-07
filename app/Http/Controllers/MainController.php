@@ -216,4 +216,9 @@ class MainController extends Controller
         }
         return false;
     }
+
+    public function forumSearch(Request $request)
+    {
+        return view('forum.search_form');
+    }
 }

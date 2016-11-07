@@ -15,7 +15,6 @@
         </div>
         <div style="float:right;margin:14px 25px 0 0;">
             @if(Auth::user())
-                <input id="action" type="hidden" name="action" value="newtopic">
                 <input id="subcat_id" type="hidden" name="subcat_id" value="{{ $subcat_id }}">
                 <input id="newtopic" type=submit value="New topic" title="Create new topic" class="btn"/>
             @else
@@ -84,7 +83,7 @@
                         <div class="clearfix"></div>
                     </div>
                 @endforeach
-                <div id="topic_editor"></div>
+                <div id="html_editor"></div>
             </div>
     </div>
 

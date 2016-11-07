@@ -19,7 +19,6 @@
 
         <div style="float:right;margin:14px 25px 0 0;">
             @if(Auth::user())
-                <input id="action" type="hidden" name="action" value="newreply">
                 <input id="topic_id" type="hidden" name="topic_id" value="{{ $topic_id }}">
                 <input id="newreply" type=button value="Reply to this topic" class="btn"/>
             @else
@@ -67,7 +66,7 @@
                 </tr>
             </table>
         @endforeach
-        <div id="reply_editor"></div>
+        <div id="html_editor"></div>
     </div>
 
 @endsection
