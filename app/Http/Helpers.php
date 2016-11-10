@@ -21,4 +21,11 @@ Class Helpers
             \DB::update(\DB::raw($sql));
         }
     }
+
+    function delDuplicateIP()
+    {
+        $sql = "DELETE FROM sessions WHERE last_activity NOT IN (SELECT MAX(last_activity) _ 
+                FROM (SELECT * FROM sessions) AS duplicates GROUP BY ip_address)";
+        \DB::update(\DB::raw($sql));
+    }
 }

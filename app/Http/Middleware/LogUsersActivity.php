@@ -2,6 +2,7 @@
 
 namespace App\Http\Middleware;
 
+use App\Http\Helpers;
 use Carbon\Carbon;
 use Closure;
 
@@ -97,7 +98,7 @@ class LogUsersActivity
         $foruminfo['hi_no_online_date'] = $hi_no_conn_users->hi_no_online_date;
         $GLOBALS['foruminfo'] = $foruminfo;
         //dd($GLOBALS['foruminfo']);
-
+        //(new Helpers())->delDuplicateIP();
         return $next($request);
     }
 }

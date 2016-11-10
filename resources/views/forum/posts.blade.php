@@ -22,7 +22,7 @@
                 <input id="topic_id" type="hidden" name="topic_id" value="{{ $topic_id }}">
                 <input id="newreply" type=button value="Reply to this topic" class="btn"/>
             @else
-                <input id="login-toogle" type=button value="Log in to reply" class="btn"/>
+                <input class="login-toggle" type=button value="Log in to reply" class="btn"/>
             @endif
         </div>
         <div class="clearfix"></div>

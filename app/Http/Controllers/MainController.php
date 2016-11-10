@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
+use Validator;
 use App\Http\Helpers;
 
 class MainController extends Controller
@@ -118,6 +119,13 @@ class MainController extends Controller
 //                }
 //            }
 //        }
+        $topics = $this->getLastPosts($topics);
+        //dd(compact('topics'));
+        return view('forum.topics', compact('topics', 'subcat_id'));
+    }
+
+    protected function getLastPosts($topics)
+    {
         foreach ($topics as $k0 => $topic) {
             $topic_id = $topic['id'];
             //$lastpost[$k0] = DB::table('posts')->where('topic_id', $topic_id)->orderby('created_at', 'desc')->first();
@@ -140,8 +148,7 @@ class MainController extends Controller
                 }
             }
         }
-        //dd(compact('topics'));
-        return view('forum.topics', compact('topics', 'subcat_id'));
+        return $topics;
     }
 
     public function showPosts(Request $request)
@@ -181,9 +188,8 @@ class MainController extends Controller
             $post_content = $request->input('post_content');
 
             $created_at = Carbon::now()->toDateTimeString();
-            $newtopic_id = DB::table('topics')->max('id') + 1;
 
-            DB::table('topics')->insert(['parent_category_id' => $subcat_id, 'name' => $topic_title,
+            $newtopic_id = DB::table('topics')->insertGetId(['parent_category_id' => $subcat_id, 'name' => $topic_title,
                 'author_id' => $user_id, 'created_at' => $created_at]);
             DB::table('posts')->insert(['topic_id' => $newtopic_id, 'author_id' => $user_id,
                 'content' => $post_content, 'created_at' => $created_at]);
@@ -202,7 +208,6 @@ class MainController extends Controller
 
             return view('forum.htmleditor', compact('topic'));
         }
-//
         elseif ($request->input('action') === 'savereply') {
 
             $user_id = \Auth::user()->id;
@@ -219,6 +224,42 @@ class MainController extends Controller
 
     public function forumSearch(Request $request)
     {
-        return view('forum.search_form');
+        if ($request->input('action') === 'newsearch') {
+
+            return view('forum.search_form');
+        } elseif ($request->input('action') === 'go') {
+
+            $validation = Validator::make($request->all(), [
+                'keywords' => 'required|max:55',
+            ]);
+            if ($validation->fails()) {
+                return redirect('search')->withErrors($validation)->withInput();
+            }
+
+            $keywords = $request->input('keywords');
+            if (preg_match("/^[  a-zA-Z]+/", $keywords)) {
+
+                if ($request->input('search_option') === 'keywords') {
+
+                    $sql = "SELECT subcateg.id AS subcat_id, subcateg.name AS subcat_name, topics.id as id, topics.name AS topic_name, posts.id AS post_id, posts.author_id AS author_id, users.name AS author_name 
+FROM subcategories subcateg JOIN topics ON topics.parent_category_id = subcateg.id JOIN posts ON posts.topic_id = topics.id JOIN users ON users.id = posts.author_id WHERE posts.content LIKE '%" . $keywords . "%'";
+                    $results = DB::select(DB::raw($sql));
+                    $results = json_decode(json_encode($results), true);
+                    $no_results = count($results);
+                    $results = $this->getLastPosts($results);
+
+                } elseif ($request->input('search_option') === 'author_name') {
+
+                    $sql = "SELECT subcateg.id AS subcat_id, subcateg.name AS subcat_name, topics.id as id, topics.name AS topic_name, posts.id AS post_id, posts.author_id AS author_id, users.name AS author_name 
+FROM subcategories subcateg JOIN topics ON topics.parent_category_id = subcateg.id JOIN posts ON posts.topic_id = topics.id JOIN users ON users.id = posts.author_id WHERE users.name LIKE '%" . $keywords . "%'";
+                    $results = DB::select(DB::raw($sql));
+                    $results = json_decode(json_encode($results), true);
+                    $no_results = count($results);
+                    $results = $this->getLastPosts($results);
+                }
+                return view('forum.search_results', compact('no_results', 'keywords', 'results'));
+            }
+        }
+        return false;
     }
 }

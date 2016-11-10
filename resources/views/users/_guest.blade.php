@@ -1,15 +1,16 @@
 <div class="user_avatar">
-    <a href="#">
+    <a class="login-toggle" href="#">
         <img src="{{ url('img/guest.png') }}" title="Guest">
     </a>
 </div>
 
 <div class="user_info">
-    <div style="padding-top: 12px">Welcome, <a href="#"><span>Guest</span></a>
+    <div style="padding-top: 12px">Welcome, <a class="login-toggle" href="#"><span>Guest</span></a>
     </div>
     <div style="padding-top: 8px">
         <div class="dropdown" style="float: left; margin-right: 8px">
-            <a href="#log" class="dropdown-tooggle" data-toggle="dropdown" role="button" aria-expanded="false">
+            <a id="login" href="#log" class="dropdown-tooggle" data-toggle="dropdown" role="button"
+               aria-expanded="false">
                 Login
             </a>
             <ul class="dropdown-menu" role="menu">

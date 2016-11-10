@@ -358,6 +358,8 @@ a {
 
 h1 {
     font-size: 12pt;
+    position: relative;
+    font-family: Georgia;
 }
 
 h2 {

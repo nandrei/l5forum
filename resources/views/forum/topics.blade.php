@@ -18,7 +18,7 @@
                 <input id="subcat_id" type="hidden" name="subcat_id" value="{{ $subcat_id }}">
                 <input id="newtopic" type=submit value="New topic" title="Create new topic" class="btn"/>
             @else
-                <input id="login-toogle" type=button value="Log in to create new topic" class="btn"/>
+                <input class="login-toggle" type=button value="Log in to create new topic" class="btn"/>
             @endif
         </div>
         <div class="clearfix"></div>

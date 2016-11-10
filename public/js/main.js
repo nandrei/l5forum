@@ -2,6 +2,11 @@ $(document).ready(function () {
     $('.dropdown .dropdown-menu').on('click', function (e) {
         e.stopPropagation();
     });
+    $('.login-toggle').click(function (event) {
+        event.preventDefault();
+        $('#login').click();
+        return false;
+    });
 });
 
 var baseUrl = 'http://host1.hostmama.ro/~rowebsol/rowebsolutions.tk/andrei/l5forum/public';
@@ -20,7 +25,7 @@ $('#search').click(function () {
         var data = {action: 'newsearch', _token: CSRF_TOKEN};
         var request = $.ajax({
             url: url,
-            type: 'GET',
+            type: 'POST',
             contentType: 'application/json; charset=utf-8',
             dataType: 'html',
             data: JSON.stringify(data)

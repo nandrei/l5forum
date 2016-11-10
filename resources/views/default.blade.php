@@ -23,7 +23,7 @@
     <div class="header">
         <div class="subheader">
             <a href="{{ route('homepage') }}">
-                <div id="logo" title="L5forum.ro"></div>
+                <div id="logo" title="Lforum.tk"></div>
             </a>
 
             <div class="userbar">
