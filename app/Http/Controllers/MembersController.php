@@ -99,9 +99,11 @@ class MembersController extends Controller
 
     public function listAllMembers()
     {
-        $users = DB::select(DB::raw("SELECT * FROM users WHERE 1"));
+        $users = DB::table('users')->join('profiles', 'users.id', '=', 'profiles.id')
+            ->select('users.*', 'profiles.country')
+            ->get();
         $users = json_decode(json_encode($users), true);
-
+        //dd($users);
         return view('members.members', compact('users'));
     }
 }

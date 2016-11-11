@@ -44,7 +44,7 @@
                             <li>
                                 <div class="inlined">
                                     <span class="label">Active Posts:</span>
-                                    <span class="row_data">0</span>
+                                    <span class="row_data">{{ $user[0]->no_posts }}</span>
                                 </div>
                                 <hr class="style1">
                             </li>

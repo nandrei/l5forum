@@ -23,7 +23,7 @@
             <table id="searchresults" width="70%" cellspacing="0" cellpadding="5">
                 <tbody>
                 <tr>
-                    <td class="colhead" width="5%"></td>
+                    <td class="colhead" height="40px" width="5%"></td>
                     <td class="colhead">Forum</td>
                     <td class="colhead">Topic</td>
                     <td class="colhead">Author</td>

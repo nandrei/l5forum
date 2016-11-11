@@ -90,30 +90,4 @@
 <script type="text/javascript" src="{!! asset('../resources/assets/froala_editor/js/languages/ro.js') !!}"></script>
 
 <!-- Initialize the editor. -->
-<script>
-    $(function () {
-        $('#editor').froalaEditor({
-            autosave: true, // Enable autosave option. Enabling autosave helps preventing data loss.
-            autosaveInterval: 1000, // Time in milliseconds to define when the autosave should be triggered.
-            saveURL: null, // Defines where to post the data when save is triggered. The editor will initialize a POST request to the specified URL passing the editor content in the body parameter of the HTTP request.
-            blockTags: ["n", "p", "blockquote", "pre", "h1", "h2", "h3", "h4", "h5", "h6"], // Defines what tags list to format a paragraph and their order.
-            borderColor: "#252528", // Customize the appearance of the editor by changing the border color.
-//        buttons: ["bold", "italic", "underline", "strikeThrough", "fontSize", "color", "sep", "formatBlock", "align", "insertOrderedList", "insertUnorderedList", "outdent", "indent", "sep", "selectAll", "createLink", "insertImage", "undo", "redo", "html"], // Defines the list of buttons that are available in the editor.
-            crossDomain: false, // Make AJAX requests using CORS.
-            direction: "ltr", // Sets the direction of the text.
-            editorClass: "", // Set a custom class for the editor element.
-            height: "auto", // Set a custom height for the editor element.
-            heightMin: 150,
-            heightMax: 300,
-            imageMargin: 20, // Define a custom margin for image. It will be visible on the margin of the image when float left or right is active.
-            imageErrorCallback: false,
-            imageUploadParam: "img", // Customize the name of the param that has the image file in the upload request.
-            imageUploadURL: "{!! asset('img') !!}", // A custom URL where to save the uploaded image.
-            inlineMode: true, // Enable or disable inline mode.
-            placeholder: "Content", // Set a custom placeholder to be used when the editor body is empty.
-            spellcheck: false, // Enables spellcheck.
-            typingTimer: 250, // Time in milliseconds to define how long the typing pause may be without the change to be saved in the undo stack.
-            width: "auto" // Set a custom width for the editor element.
-        })
-    });
-</script>
+<script type="text/javascript" src="{{ url('js/html_editor.js') }}"></script>

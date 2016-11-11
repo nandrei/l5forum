@@ -8,7 +8,7 @@
         <td align="center" valign="middle">
             <img src="{{ url('img/icons/connected.png') }}" alt="Who is online"/>
         </td>
-        <td class="row1" align="left">
+        <td align="left">
                     <span class="small">
                         In total are <b>{{ 0 | $GLOBALS['foruminfo']['online_users'] }}</b> online users : {{ 0 | $GLOBALS['foruminfo']['members'] }}
                         members and {{ 0 | $GLOBALS['foruminfo']['guests'] }} guests<br/>
@@ -19,7 +19,7 @@
         </td>
         <td align="center" valign="middle"><img src="{{ url('img/icons/forumstats.png') }}"
                                                 alt="Forum stats"/></td>
-        <td class="row2" align="left">
+        <td align="left">
                     <span class="small">
                         Total number of posts is <b>{{ 0 | $GLOBALS['foruminfo']['total_posts'] }}</b><br/>
                         We have <b>{{ 0 | $GLOBALS['foruminfo']['total_members'] }}</b> members<br/>
