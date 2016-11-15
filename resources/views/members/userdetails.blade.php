@@ -7,7 +7,7 @@
             <div class="myprofile">
                 <p class="user_photo">
                     <img class="user_photo" src="{{ url($user[0]->avatar_path ?: 'img/icons/guest.png') }}" alt
-                         title="user&#39;s Photo"/>
+                         title="{{ $user[0]->name }}&#39;s Profile photo"/>
                 </p>
 
                 <ul class="tab-pane">
@@ -21,6 +21,12 @@
                 <div class="profile_main">
                     <h1 class="username" style="font-size: large">
                         <b><span class="username">{{ $user[0]->name }}</span></b>
+                        @if(Auth::user()->id == $user[0]->id)
+                            <a href="{{ url('profile') }}">
+                                <img style="height: 20px;" src="{{ url('img/icons/edit-profile.png') }}"
+                                     title="Edit your profile"/>
+                            </a>
+                        @endif
                     </h1>
                     Member Since - {{ $user[0]->created_at }}<br/>
                     @if ($user[0]->user_status === 'online')

@@ -6,7 +6,7 @@
     </tr>
     <tr>
         <td align="center" valign="middle">
-            <img src="{{ url('img/icons/connected.png') }}" alt="Who is online"/>
+            <img src="{{ url('img/icons/connected.png') }}" title="Who is online"/>
         </td>
         <td align="left">
                     <span class="small">
@@ -18,7 +18,7 @@
                     </span>
         </td>
         <td align="center" valign="middle"><img src="{{ url('img/icons/forumstats.png') }}"
-                                                alt="Forum stats"/></td>
+                                                title="Forum stats"/></td>
         <td align="left">
                     <span class="small">
                         Total number of posts is <b>{{ 0 | $GLOBALS['foruminfo']['total_posts'] }}</b><br/>

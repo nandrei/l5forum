@@ -12,9 +12,11 @@
     <div class="form-group">
         {{ Form::textarea('post_content',null,array('class' => 'form-control', 'id' => 'editor')) }}
     </div>
+
     <div class="form-group">
         {{ Form::submit('Add topic', array('class' => 'btn btn-primary btn-sm')) }}
-        {{ Form::submit('Cancel', array('class' => 'btn btn-default btn-sm', 'id' => 'cancel_edit')) }}
+        <input type="button" class="btn btn-default btn-sm" value="Cancel" onclick="window.location.reload()">
+        {{--{{ Form::input('button', null, 'Cancel', array('class' => 'btn btn-default btn-sm', 'id' => 'cancel_edit')) }}--}}
     </div>
 </div>
 {{ Form::close() }}

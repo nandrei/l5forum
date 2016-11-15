@@ -43,6 +43,11 @@ Route::any('newreply/create', array(
     'uses' => 'MainController@createNewReply'
 ));
 
+Route::any('editpost', array(
+    'as' => 'editpost',
+    'uses' => 'MainController@editPost'
+));
+
 Route::get('userdetails', array(
     'as' => 'userdetails',
     'uses' => 'MembersController@showMemberDetails'

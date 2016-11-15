@@ -29,6 +29,8 @@
     @include('partials.newtopic_form')
 @elseif(isset($topic))
     @include('partials.newreply_form')
+@elseif(isset($post))
+    @include('partials.editpost_form')
 @endif
 
 <!-- Include JS files. -->

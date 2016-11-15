@@ -158,7 +158,7 @@ class MainController extends Controller
         //$posts = DB::select(DB::raw("SELECT * FROM posts WHERE topic_id = $topic_id"));
         $posts = DB::table('posts')->where('topic_id', '=', $topic_id)
             ->join('users', 'users.id', '=', 'posts.author_id')
-            ->select('posts.author_id', 'posts.content', 'posts.created_at as post_date', 'users.avatar_path', 'users.name as author', 'users.class', 'users.created_at as join_date', 'users.no_posts')
+            ->select('posts.author_id', 'posts.id as post_id', 'posts.content', 'posts.created_at as post_date', 'users.avatar_path', 'users.name as author', 'users.class', 'users.created_at as join_date', 'users.no_posts')
             ->orderBy('post_date', 'asc')->get();
         $posts = json_decode(json_encode($posts), true);
 
@@ -224,6 +224,17 @@ class MainController extends Controller
             return redirect('topic/' . $topic->name . '?topic_id=' . $topic_id);
         }
         return false;
+    }
+
+    public function editPost(Request $request)
+    {
+        $post_id = $request->input('post_id');
+        $post = DB::table('posts')->where('id', $post_id)->first();
+
+        if ($request->input('action') === 'editpost') {
+            //dd($post);
+            return view('forum.htmleditor', compact('post'));
+        }
     }
 
     public function forumSearch(Request $request)

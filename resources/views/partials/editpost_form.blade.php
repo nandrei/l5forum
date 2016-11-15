@@ -1,15 +1,15 @@
 {!! Form::open(array('route' => 'newreply')) !!}
 <div class="editor-box">
     <div class="forum-header" style="margin-top: 25px; width:854px;">
-        Replying to {{ $topic->name }}
+        Edit post
     </div>
-    {!! Form::hidden('action', 'savereply' ) !!}
-    {!! Form::hidden('topic_id', $topic->id ) !!}
+    {!! Form::hidden('action', 'savepost' ) !!}
+    {!! Form::hidden('post_id', $post->id ) !!}
     <div class="form-group">
-        {!! Form::textarea('post_content',null, array('class' => 'form-control', 'id' => 'editor')) !!}
+        {!! Form::textarea('post_content', $post->content, array('class' => 'form-control', 'id' => 'editor')) !!}
     </div>
     <div class="form-group">
-        {!! Form::submit('Add reply', array('class' => 'btn btn-primary btn-sm')) !!}
+        {!! Form::submit('Save', array('class' => 'btn btn-primary btn-sm')) !!}
         <input type="button" class="btn btn-default btn-sm" value="Cancel" onclick="window.location.reload()">
     </div>
 </div>

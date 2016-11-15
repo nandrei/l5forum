@@ -34,7 +34,7 @@ class MembersController extends Controller
 
     public function showMemberProfile()
     {
-        $user_id = \Auth::user()->id;
+        $user_id = auth()->user()->id;
         $profile = DB::table('users')->where('users.id', '=', $user_id)
             ->leftjoin('profiles', 'profiles.id', '=', 'users.id')->get();
         //dd(compact('profile'));

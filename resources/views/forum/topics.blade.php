@@ -16,7 +16,7 @@
         <div style="float:right;margin:14px 25px 0 0;">
             @if(Auth::user())
                 <input id="subcat_id" type="hidden" name="subcat_id" value="{{ $subcat_id }}">
-                <input id="newtopic" type=submit value="New topic" title="Create new topic" class="btn btn-default"/>
+                <input id="newtopic" type="button" value="New topic" title="Create new topic" class="btn"/>
             @else
                 <input class="login-toggle" type=button value="Log in to create new topic" class="btn"/>
             @endif
