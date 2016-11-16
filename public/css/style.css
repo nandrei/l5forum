@@ -467,6 +467,13 @@ input.nobg:hover {
     margin-right: 15px;
 }
 
+.post_content {
+    min-height: 175px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
 a:link, a:visited {
     text-decoration: none;
     color: #8b9aaa;

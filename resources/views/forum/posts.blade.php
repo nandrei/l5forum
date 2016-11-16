@@ -33,7 +33,7 @@
                     <td class="colhead" colspan="2">
                         <span class="small">#{{ $post['postnumber'] }} by</span>
                         <a href="{{ url('userdetails') }}?id={{ $post['author_id'] }}">
-                            <b><span class="userclasscolor">{{ $post['author'] }}</span></b>
+                            <b><span class="userclasscolor">{{ $post['author_name'] }}</span></b>
                         </a>
                         <span style="position:relative; bottom:2px"></span>
                         <span class="small">at {{ $post['post_date'] }} - GMT</span>
@@ -67,8 +67,16 @@
                         </div>
                     </td>
                     <td style="padding: 10px">
-                        <div class="fr-view">
-                            {!! $post['content'] !!}
+                        <div class="post_content">
+                            <div class="fr-view">
+                                {!! $post['content'] !!}
+                            </div>
+
+                            @if(isset($post['is_edited']))
+                                <div class="small">
+                                    Last edited by {{ $post['author_name'] }} on {{ $post['edit_date'] }}
+                                </div>
+                            @endif
                         </div>
                     </td>
                 </tr>

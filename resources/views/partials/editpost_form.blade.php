@@ -1,7 +1,7 @@
-{!! Form::open(array('route' => 'newreply')) !!}
+{!! Form::open(array('route' => 'editpost')) !!}
 <div class="editor-box">
     <div class="forum-header" style="margin-top: 25px; width:854px;">
-        Edit post
+        Edit post in {{ $post->topic_name }} topic
     </div>
     {!! Form::hidden('action', 'savepost' ) !!}
     {!! Form::hidden('post_id', $post->id ) !!}

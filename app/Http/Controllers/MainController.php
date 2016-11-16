@@ -108,17 +108,6 @@ class MainController extends Controller
             ->select('topics.*', 'users.name as author_name')->get();
         $topics = json_decode(json_encode($topics), true);
 
-//        foreach ($topics as $k0 => $topic) {
-//            $topic_id = $topic['author_id'];
-//            $topic_author = DB::select(DB::raw("SELECT id, name FROM users WHERE id = $topic_id"));
-//            $topic_author = json_decode(json_encode($topic_author), true);
-//
-//            foreach ($topic_author as $k1 => $author) {
-//                if ($topic_id === $author['id']) {
-//                    $topics[$k0]['author'] = $author['name'];
-//                }
-//            }
-//        }
         $topics = $this->getLastPosts($topics);
         //dd(compact('topics'));
         return view('forum.topics', compact('topics', 'subcat_id'));
@@ -155,15 +144,17 @@ class MainController extends Controller
     {
         $topic_id = $request->input('topic_id');
 
-        //$posts = DB::select(DB::raw("SELECT * FROM posts WHERE topic_id = $topic_id"));
         $posts = DB::table('posts')->where('topic_id', '=', $topic_id)
             ->join('users', 'users.id', '=', 'posts.author_id')
-            ->select('posts.author_id', 'posts.id as post_id', 'posts.content', 'posts.created_at as post_date', 'users.avatar_path', 'users.name as author', 'users.class', 'users.created_at as join_date', 'users.no_posts')
+            ->select('posts.author_id', 'posts.id as post_id', 'posts.content', 'posts.created_at as post_date', 'posts.updated_at as edit_date', 'users.avatar_path', 'users.name as author_name', 'users.class', 'users.created_at as join_date', 'users.no_posts')
             ->orderBy('post_date', 'asc')->get();
         $posts = json_decode(json_encode($posts), true);
 
         $postnumber = 0;
         foreach ($posts as $k => $post) {
+            if ($post['post_date'] < $post['edit_date']) {
+                $posts[$k]['is_edited'] = true;
+            }
             $posts[$k]['postnumber'] = $postnumber += 1;
         }
         $page_id = $request->input();
@@ -212,13 +203,14 @@ class MainController extends Controller
         }
         elseif ($request->input('action') === 'savereply') {
 
-            $user_id = \Auth::user()->id;
+            $user_id = auth()->user()->id;
             $post_content = $request->input('post_content');
             $created_at = Carbon::now()->toDateTimeString();
 
             DB::table('posts')->insert(['topic_id' => $topic_id, 'author_id' => $user_id,
                 'content' => $post_content, 'created_at' => $created_at]);
-            $sql = "UPDATE users SET no_posts = no_posts + 1 WHERE id = $user_id";
+            $sql = "UPDATE users, topics SET users.no_posts = users.no_posts + 1, topics.replies = topics.replies + 1 
+WHERE users.id = $user_id AND topics.id = $topic_id";
             DB::update(DB::raw($sql));
 
             return redirect('topic/' . $topic->name . '?topic_id=' . $topic_id);
@@ -229,11 +221,22 @@ class MainController extends Controller
     public function editPost(Request $request)
     {
         $post_id = $request->input('post_id');
-        $post = DB::table('posts')->where('id', $post_id)->first();
+        $post = DB::table('posts')->join('topics', 'topics.id', '=', 'posts.topic_id')
+            ->where('posts.id', $post_id)
+            ->select('posts.*', 'topics.id as topic_id', 'topics.name as topic_name')
+            ->first();
 
         if ($request->input('action') === 'editpost') {
-            //dd($post);
+
             return view('forum.htmleditor', compact('post'));
+        } elseif ($request->input('action') === 'savepost') {
+
+            $author_id = auth()->user()->id;
+            $post_content = $request->input('post_content');
+
+            DB::table('posts')->where('id', $post_id)->where('author_id', $author_id)->update(['content' => $post_content]);
+            //dd($request->input());
+            return redirect('topic/' . $post->topic_name . '?topic_id=' . $post->topic_id);
         }
     }
 

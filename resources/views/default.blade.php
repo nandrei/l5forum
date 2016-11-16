@@ -38,7 +38,7 @@
                 <div id="nav">
                     <ul>
                         <li class="fleft"><a href="{{ route('homepage') }}">Home</a></li>
-                        <li class="fleft"><a href="#" id="search">Search</a></li>
+                        <li class="fleft"><a href="#search" id="search">Search</a></li>
                         <li class="fleft"><a href="{{ url('/members') }}">Members</a></li>
                         <li class="fleft"><a href="#">Rules</a></li>
                         <li class="fleft"><a target='_blank' href="//github.com/nandrei">Contact</a></li>

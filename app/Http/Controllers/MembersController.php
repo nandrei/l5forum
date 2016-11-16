@@ -14,17 +14,18 @@ class MembersController extends Controller
         $user_id = $request->input('id');
         $sql = "SELECT * FROM profiles JOIN users ON profiles.id = users.id WHERE users.id = $user_id";
         $user = DB::select(DB::raw($sql));
+        $user = reset($user);
 
         $last_activity = DB::select(DB::raw("SELECT last_activity FROM sessions WHERE user_id = $user_id"));
         //dd($last_activity);
         $user_last_activity = date('Y-m-d G:i:s', $last_activity[0]->last_activity);
-        $user[0]->last_activity_date = $user_last_activity;
+        $user->last_activity_date = $user_last_activity;
 
         //Check if user is online or offline.
         if ($last_activity[0]->last_activity >= strtotime(Carbon::now()->subMinutes(10))) {
-            $user[0]->user_status = 'online';
+            $user->user_status = 'online';
         } else {
-            $user[0]->user_status = 'offline';
+            $user->user_status = 'offline';
         }
         $page_id = $request->input();
         (new Helpers)->recordPageViews($page_id);
