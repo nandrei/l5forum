@@ -21,13 +21,6 @@ class LoginController extends Controller
     use AuthenticatesUsers;
 
     /**
-     * Where to redirect users after login / registration.
-     *
-     * @var string
-     */
-    protected $redirectTo = '/';
-
-    /**
      * Create a new controller instance.
      *
      * @return void
@@ -35,5 +28,25 @@ class LoginController extends Controller
     public function __construct()
     {
         $this->middleware('guest', ['except' => 'logout']);
+    }
+
+    /**
+     * Override the username method used to validate login
+     *
+     * @return string
+     */
+    public function username()
+    {
+        return 'name';
+    }
+
+    /**
+     * Override redirectPath method used after login / registration.
+     *
+     * @var string
+     */
+    public function redirectPath()
+    {
+        return session('_previous')['url'];
     }
 }

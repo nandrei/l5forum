@@ -5,7 +5,7 @@
         <p>
             {{ $errors->has('email', 'password') ? ' has-error' : '' }}
         </p>
-        <input id="email" type="email" name="email" placeholder="Email" value="{{ old('email') }}" required autofocus>
+        <input id="name" type="text" name="name" placeholder="Username" value="{{ old('name') }}" required autofocus>
         @if ($errors->has('email'))
             <span class="help-block">
                     <strong>{{ $errors->first('email') }}</strong>
